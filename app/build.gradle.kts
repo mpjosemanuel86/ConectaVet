@@ -1,5 +1,7 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+
+    id ("com.android.application")
+    id ("com.google.gms.google-services")
 }
 
 android {
@@ -38,7 +40,15 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     testImplementation(libs.junit)
-    implementation("com.airbnb.android:lottie:3.4.2")
+    implementation ("com.airbnb.android:lottie:3.4.2")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.material.v140)
+    implementation(libs.firebase.auth)
+    implementation("com.google.firebase:firebase-database:19.6.0")
+
+    //noinspection UseTomlInstead
+    implementation ("com.google.firebase:firebase-analytics")
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }

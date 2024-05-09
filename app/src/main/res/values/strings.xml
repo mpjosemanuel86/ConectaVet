@@ -2,7 +2,16 @@
     <string name="app_name">ConectaVet</string>
 
     //MAIN ACTIVITY
-    <string name="Btn_Login">Login</string>
-    <string name="Btn_Registro">Registro</string>
+    <string name="Btn_Login">Iniciar sesión</string>
+    <string name="Btn_Registro">Registrarse</string>
+
+    <!--ACTIVIDAD REGISTRO-->
+    <string name="CrearCuentaTXT">Crear una cuenta</string>
+    <string name="NombreEt">Nombres</string>
+    <string name="CorreoEt">Correo electrónico</string>
+    <string name="ContraseñaEt">Contraseña</string>
+    <string name="ConfirmarContraseñaEt">Confirmar contraseña</string>
+    <string name="RegistrarUsuario">Registro</string>
+    <string name="TengounacuentaTXT">Tengo una cuenta</string>
 
 </resources>

@@ -1,21 +1,33 @@
 [versions]
 agp = "8.3.2"
+firebaseAnalytics = "21.6.2"
+firebaseAuth = "22.3.1"
+firebaseBom = "32.8.1"
+firebaseDatabase = "20.3.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
+lottie = "3.4.2"
 material = "1.11.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
+materialVersion = "1.4.0"
 
 [libraries]
+firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalytics" }
+firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-database = { module = "com.google.firebase:firebase-database", version.ref = "firebaseDatabase" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+material-v140 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
