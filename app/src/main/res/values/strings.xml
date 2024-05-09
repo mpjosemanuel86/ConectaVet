@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ConectaVet</string>
 
-    //MAIN ACTIVITY
+    <!--MAIN ACTIVITY-->
     <string name="Btn_Login">Iniciar sesión</string>
     <string name="Btn_Registro">Registrarse</string>
 
@@ -14,4 +14,14 @@
     <string name="RegistrarUsuario">Registro</string>
     <string name="TengounacuentaTXT">Tengo una cuenta</string>
 
+    <!--MENÚ PRINCIPAL-->
+    <string name="CerrarSesion">Salir</string>
+
+    <!--ACTIVIDAD LOGIN-->
+    <string name="IniciarSesionTXT">Iniciar sesión</string>
+    <string name="CorreoLogin">Correo</string>
+    <string name="PassLogin">Contraseña</string>
+    <string name="Btn_Login2">Ingresar</string>
+    <string name="UsuarioNuevoTXT">¿No tienes una cuenta?. Registrate</string>
+    
 </resources>

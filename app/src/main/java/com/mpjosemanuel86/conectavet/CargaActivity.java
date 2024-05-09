@@ -6,12 +6,16 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 /**
  * Esta actividad se encarga de mostrar una pantalla de carga al inicio de la aplicación
  * y luego inicia la actividad principal después de un cierto tiempo.
  */
 public class CargaActivity extends AppCompatActivity {
 
+    FirebaseAuth firebaseAuth;
 
 
     @Override
@@ -21,6 +25,8 @@ public class CargaActivity extends AppCompatActivity {
         // Establecer el diseño de la pantalla de carga
         setContentView(R.layout.activity_carga);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         // Duración de la pantalla de carga en milisegundos
         int Tiempo = 3000;
 
@@ -28,15 +34,28 @@ public class CargaActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Crear un Intent para iniciar la actividad principal
+                /* Crear un Intent para iniciar la actividad principal
                 Intent intent = new Intent(CargaActivity.this, MainActivity.class);
 
                 // Iniciar la actividad principal
                 startActivity(intent);
 
                 // Finalizar la actividad actual (pantalla de carga)
-                finish();
+                finish();*/
+                VerificarUsuario();
             }
         }, Tiempo);
+    }
+    private void    VerificarUsuario(){
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+                if (firebaseUser == null){
+                    startActivity(new Intent(CargaActivity.this, MainActivity.class));
+                    finish();
+
+                }else {
+                    startActivity(new Intent(CargaActivity.this, MenuPrincipal.class));
+                    finish();
+                }
     }
 }
