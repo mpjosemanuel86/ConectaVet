@@ -23,5 +23,9 @@
     <string name="PassLogin">Contraseña</string>
     <string name="Btn_Login2">Ingresar</string>
     <string name="UsuarioNuevoTXT">¿No tienes una cuenta?. Registrate</string>
-    
+
+    <!--ACTIVIDAD LOGIN-->
+    <string name="BienvenidoPrincipal"></string>
+    <string name="NombresPrincipal"> -- </string>
+    <string name="CorreoPrincipal"> -- </string>
 </resources>
