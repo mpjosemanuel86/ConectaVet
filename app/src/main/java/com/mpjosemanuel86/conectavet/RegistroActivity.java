@@ -45,16 +45,13 @@ public class RegistroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar(); // Obtener la instancia del ActionBar
         if (actionBar != null) {
-            actionBar.setTitle("Atrás");
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setTitle("Cancelar"); // Establecer el título del ActionBar
+            actionBar.setDisplayHomeAsUpEnabled(true); // Mostrar el botón de navegación hacia atrás en el ActionBar
         }
+
+
 
         NombreEt = findViewById(R.id.NombreEt);
         CorreoEt = findViewById(R.id.CorreoEt);
@@ -169,7 +166,7 @@ public class RegistroActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return super.onSupportNavigateUp();
+        onBackPressed(); // Llama al método onBackPressed() cuando se presiona el botón de navegación hacia atrás
+        return true;
     }
 }

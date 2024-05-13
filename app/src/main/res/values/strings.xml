@@ -15,7 +15,15 @@
     <string name="TengounacuentaTXT">Tengo una cuenta</string>
 
     <!--MENÚ PRINCIPAL-->
+    <string name="GestionCliente">Clientes</string>
+    <string name="ProgramarCitas">Citas</string>
+    <string name="RecordatorioVacunas">Vacunas</string>
+    <string name="HistorialMascota">Mascotas</string>
+    <string name="GestionRecurso">Recursos</string>
     <string name="CerrarSesion">Salir</string>
+
+    <!--ACTIVIDAD GESTIÓN CLIENTE-->
+    <string name="AgregarCliente">Agregar cliente</string>
 
     <!--ACTIVIDAD LOGIN-->
     <string name="IniciarSesionTXT">Iniciar sesión</string>
@@ -28,4 +36,6 @@
     <string name="BienvenidoPrincipal">Bienvenido@</string>
     <string name="NombresPrincipal"> -- </string>
     <string name="CorreoPrincipal"> -- </string>
+
+
 </resources>

@@ -24,10 +24,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mpjosemanuel86.conectavet.ui.GestionClienteActivity;
 
 public class MenuPrincipal extends AppCompatActivity {
 
-    Button CerrarSesion;
+    Button CerrarSesion, botonClientes;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
 
@@ -40,8 +41,7 @@ public class MenuPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Agenda Online");
+
 
         NombresPrincipal = findViewById(R.id.NombresPrincipal);
         CorreoPrincipal= findViewById(R.id.CorreoPrincipal);
@@ -49,8 +49,21 @@ public class MenuPrincipal extends AppCompatActivity {
 
         Usuarios = FirebaseDatabase.getInstance().getReference("Usuarios");
         CerrarSesion = findViewById(R.id.CerrarSesion);
+        botonClientes = findViewById(R.id.btnClientes);
+
+
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
+
+        botonClientes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuPrincipal.this, GestionClienteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         CerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override

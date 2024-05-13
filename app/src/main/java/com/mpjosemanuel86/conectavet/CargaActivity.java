@@ -3,6 +3,7 @@ package com.mpjosemanuel86.conectavet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -54,6 +55,8 @@ public class CargaActivity extends AppCompatActivity {
                     finish();
 
                 }else {
+                    String uid = firebaseUser.getUid();
+                    Log.d("prueba", uid);
                     startActivity(new Intent(CargaActivity.this, MenuPrincipal.class));
                     finish();
                 }
