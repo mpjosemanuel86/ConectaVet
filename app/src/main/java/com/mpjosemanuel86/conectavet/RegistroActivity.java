@@ -26,14 +26,19 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class RegistroActivity extends AppCompatActivity {
 
     EditText NombreEt, CorreoEt, ContraseñaEt, ConfirmarContraseñaEt;
+    
     Button RegistrarUsuario;
     TextView TengounacuentaTXT;
+
 
     FirebaseAuth firebaseAuth;
     ProgressDialog progressDialog;
@@ -131,21 +136,27 @@ public class RegistroActivity extends AppCompatActivity {
 
     private void GuardarInformacion() {
         progressDialog.setMessage("Guardando su información");
-        progressDialog.dismiss();
+        progressDialog.show();
 
         //Obetener la identificación de usuario actual
         String uid = firebaseAuth.getUid();
+        // Crear un HashMap para almacenar los datos del usuario/veterinario
+        HashMap<String, String> datosVeterinario = new HashMap<>();
+        //todo seguir xaqui
 
-        HashMap<String, String> Datos = new HashMap<>();
-        Datos.put("uid", uid);
-        Datos.put("correo", correo);
-        Datos.put("nombres", nombre);
-        Datos.put("password", password);
+        datosVeterinario.put("uid", uid);
+        datosVeterinario.put("correo", correo);
+        datosVeterinario.put("nombres", nombre);
+        datosVeterinario.put("password", password);
+        // Agregar campos adicionales como listas vacías
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Usuarios");
-        databaseReference.child(uid)
-                .setValue(Datos)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("usuarios")
+                .document(uid)
+                .set(datosVeterinario)
+                .addOnSuccessListener(new OnSuccessListener<Void>(){
                     @Override
                     public void onSuccess(Void unused) {
                         progressDialog.dismiss();
@@ -153,12 +164,12 @@ public class RegistroActivity extends AppCompatActivity {
                         startActivity(new Intent(RegistroActivity.this, MenuPrincipal.class));
                         finish();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
+                })
+                .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                        Toast.makeText(RegistroActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(RegistroActivity.this, "Error al guardar la información: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

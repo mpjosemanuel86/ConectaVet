@@ -22,16 +22,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/btnAgregarCliente"
+            android:id="@+id/btnAgregarMascota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/AgregarCliente" />
+            android:text="AgregarMascota" />
 
         <Button
-            android:id="@+id/btnAgregarCliente2"
+            android:id="@+id/btnAgregarMascota2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="AGREGAR CLIENTE" />
+            android:text="AGREGAR MASCOTA" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvClientes"

@@ -46,13 +46,7 @@ public class CrearClienteActivity extends AppCompatActivity {
         nombreCliente = findViewById(R.id.editTextNombreCliente);
         direccionCliente = findViewById(R.id.editTextDireccionCliente);
         telefonoCliente = findViewById(R.id.editTextTelefonoCliente);
-        nombreMascota = findViewById(R.id.editTextNombreMascota);
-        especieMascota = findViewById(R.id.editTextEspecieMascota);
-        razaMascota = findViewById(R.id.editTextRazaMascota);
-        tamanioMascota = findViewById(R.id.editTextTamanioMascota);
-        sexoMascota = findViewById(R.id.editTextSexoMascota);
-        fechaNacimientoMascota = findViewById(R.id.editTextFechaNacimientoMascota);
-        colorMascota = findViewById(R.id.editTextColorMascota);
+
 
         btnGuardarDatos = findViewById(R.id.buttonGuardarDatos);
 
@@ -62,33 +56,23 @@ public class CrearClienteActivity extends AppCompatActivity {
                 String nombreClientePet = nombreCliente.getText().toString().trim();
                 String direccionClientePet = direccionCliente.getText().toString().trim();
                 String telefonoClientePet = telefonoCliente.getText().toString().trim();
-                String nombreMascotaPet = nombreMascota.getText().toString().trim();
-                String especieMascotaPet = especieMascota.getText().toString().trim();
-                String razaMascotaPet = razaMascota.getText().toString().trim();
-                String tamanioMascotaPet = tamanioMascota.getText().toString().trim();
-                String fechaNacimientoMascotaPet = fechaNacimientoMascota.getText().toString().trim();
-                String colorMascotaPet = colorMascota.getText().toString().trim();
 
-                if (nombreClientePet.isEmpty() && direccionClientePet.isEmpty() && telefonoClientePet.isEmpty() && nombreMascotaPet.isEmpty() && especieMascotaPet.isEmpty() && razaMascotaPet.isEmpty() && tamanioMascotaPet.isEmpty() && fechaNacimientoMascotaPet.isEmpty() && colorMascotaPet.isEmpty()) {
+
+                if (nombreClientePet.isEmpty() && direccionClientePet.isEmpty() && telefonoClientePet.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Ingresar los datos", Toast.LENGTH_SHORT).show();
                 } else {
-                    postPet(nombreClientePet, direccionClientePet, telefonoClientePet, nombreMascotaPet, especieMascotaPet, razaMascotaPet, tamanioMascotaPet, fechaNacimientoMascotaPet, colorMascotaPet);
+                    postPet(nombreClientePet, direccionClientePet, telefonoClientePet);
                 }
             }
         });
     }
 
-    private void postPet(String nombreClientePet, String direccionClientePet, String telefonoClientePet, String nombreMascotaPet, String especieMascotaPet, String razaMascotaPet, String tamanioMascotaPet, String fechaNacimientoMascotaPet, String colorMascotaPet) {
+    private void postPet(String nombreClientePet, String direccionClientePet, String telefonoClientePet) {
         Map<String, Object> map =  new HashMap<>();
         map.put("nombreCliente", nombreClientePet);
         map.put("direccionCliente", direccionClientePet);
         map.put("telefonoCliente", telefonoClientePet);
-        map.put("nombreMascota", nombreMascotaPet);
-        map.put("especieMascota", especieMascotaPet);
-        map.put("razaMascota", razaMascotaPet);
-        map.put("tamanioMascota", tamanioMascotaPet);
-        map.put("fechaNacimientoMascota", fechaNacimientoMascotaPet);
-        map.put("colorMascota", colorMascotaPet);
+
 
     mfirestore.collection("pet").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
         @Override

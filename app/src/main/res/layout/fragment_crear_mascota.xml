@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".CrearClienteFragment">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datos de la mascota"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center_horizontal" />
+
+
+        <!-- Datos de la mascota -->
+        <EditText
+            android:id="@+id/editTextNombreMascota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="Nombre" />
+
+        <EditText
+            android:id="@+id/editTextEspecieMascota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Especie" />
+
+        <EditText
+            android:id="@+id/editTextRazaMascota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Raza" />
+
+        <EditText
+            android:id="@+id/editTextTamanioMascota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tamaño" />
+
+        <EditText
+            android:id="@+id/editTextSexoMascota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sexo" />
+
+        <EditText
+            android:id="@+id/editTextFechaNacimientoMascota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:hint="Fecha de nacimiento" />
+
+        <EditText
+            android:id="@+id/editTextColorMascota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Color" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="75dp" />
+
+        <Button
+            android:id="@+id/buttonGuardarDatos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Guardar" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

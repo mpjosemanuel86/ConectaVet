@@ -57,7 +57,9 @@ public class CargaActivity extends AppCompatActivity {
                 }else {
                     String uid = firebaseUser.getUid();
                     Log.d("prueba", uid);
-                    startActivity(new Intent(CargaActivity.this, MenuPrincipal.class));
+                    Intent intent = new Intent(CargaActivity.this, MenuPrincipal.class);
+                    intent.putExtra("USER_ID", uid); // Pasa el UID como extra
+                    startActivity(intent);
                     finish();
                 }
     }
