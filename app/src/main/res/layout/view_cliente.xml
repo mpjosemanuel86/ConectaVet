@@ -61,22 +61,15 @@
                     android:text="Teléfono"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tvDireccion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Dirección"
-                    android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/precio_vacuna"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="v_price"
-                    android:textSize="16sp" />
             </LinearLayout>
+            <TextView
+                android:id="@+id/tvDireccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Dirección"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -95,7 +88,8 @@
             android:id="@+id/btn_eliminar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#EF1212"
+            android:tint="@color/teal_700"
+            android:src="@drawable/ic_delete"
             android:padding="5dp" />
 
     </LinearLayout>
