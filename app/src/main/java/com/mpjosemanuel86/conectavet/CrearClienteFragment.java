@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -64,24 +66,32 @@ public class CrearClienteFragment extends DialogFragment{
         return v;
     }
     private void postCliente(String nombreClientePet, String direccionClientePet, String telefonoClientePet) {
-        Map<String, Object> map =  new HashMap<>();
-        map.put("nombreCliente", nombreClientePet);
-        map.put("direccionCliente", direccionClientePet);
-        map.put("telefonoCliente", telefonoClientePet);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("nombreCliente", nombreClientePet);
+            map.put("direccionCliente", direccionClientePet);
+            map.put("telefonoCliente", telefonoClientePet);
+            map.put("uid", uid);
 
 
-        mfirestore.collection("cliente").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(getContext(),"Creado exitosamente", Toast.LENGTH_SHORT).show();
-                getDialog().dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(),"Error al ingresar", Toast.LENGTH_SHORT).show();
-                Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
-            }
-        });
-    }
-}
+            mfirestore.collection("cliente").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Toast.makeText(getContext(), "Creado exitosamente", Toast.LENGTH_SHORT).show();
+                    getDialog().dismiss();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "Error al ingresar", Toast.LENGTH_SHORT).show();
+                    Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
+                }
+            });
+        } else {
+            Toast.makeText(getContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
+        }
+        }
+        }
