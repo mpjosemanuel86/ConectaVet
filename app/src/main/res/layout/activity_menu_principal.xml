@@ -135,7 +135,7 @@
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/jeringuilla" />
+                    android:src="@drawable/vacuna" />
 
                 <Button
                     android:id="@+id/btnVacunas"

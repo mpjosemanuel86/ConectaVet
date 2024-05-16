@@ -3,6 +3,7 @@ agp = "8.3.2"
 firebaseAnalytics = "21.6.2"
 firebaseAuth = "22.3.1"
 firebaseBom = "32.8.1"
+firebaseBomVersion = "33.0.0"
 firebaseDatabase = "20.3.1"
 firebaseUiFirestore = "4.3.2"
 junit = "4.13.2"
@@ -20,6 +21,7 @@ firebaseFirestore = "25.0.0"
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalytics" }
 firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-bom-v3300 = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
 firebase-database = { module = "com.google.firebase:firebase-database", version.ref = "firebaseDatabase" }
 firebase-ui-firestore = { module = "com.firebaseui:firebase-ui-firestore", version.ref = "firebaseUiFirestore" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

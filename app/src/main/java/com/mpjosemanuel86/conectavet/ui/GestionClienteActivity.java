@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
@@ -47,38 +49,19 @@ public class GestionClienteActivity extends AppCompatActivity {
 
         mFirestore = FirebaseFirestore.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
         mRecycler = findViewById(R.id.rvClientes);
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
 
         if (currentUser != null) {
             String uid = currentUser.getUid();
-
-            // Usar SnapshotListener para escuchar cambios en tiempo real
             Query query = mFirestore.collection("cliente").whereEqualTo("uid", uid);
-            query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    if (e != null) {
-                        // Manejar errores de escucha
-                        // Manejar errores de escucha
-                        Toast.makeText(GestionClienteActivity.this, "Error al obtener los datos: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        return;
-                    }
+            FirestoreRecyclerOptions<Cliente> firestoreRecyclerOptions =
+                    new FirestoreRecyclerOptions.Builder<Cliente>().setQuery(query, Cliente.class).build();
 
-                    List<Cliente> clientes = new ArrayList<>();
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        Cliente cliente = documentSnapshot.toObject(Cliente.class);
-                        clientes.add(cliente);
-                    }
-
-                    // Configurar el adaptador con los datos obtenidos de Firestore
-                    mAdapter = new ClienteAdapter(GestionClienteActivity.this, clientes);
-                    mRecycler.setAdapter(mAdapter);
-                }
-            });
-
-        }else{
+            mAdapter = new ClienteAdapter(firestoreRecyclerOptions, this);
+            mAdapter.notifyDataSetChanged();
+            mRecycler.setAdapter(mAdapter);
+        } else {
             Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
 
@@ -97,6 +80,20 @@ public class GestionClienteActivity extends AppCompatActivity {
                 fm.show(getSupportFragmentManager(), "Navegar a fragment");
             }
         });
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAdapter.stopListening();
     }
 }
 

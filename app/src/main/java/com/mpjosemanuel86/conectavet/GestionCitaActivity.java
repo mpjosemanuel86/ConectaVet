@@ -86,6 +86,7 @@ public class GestionCitaActivity extends AppCompatActivity {
         });
         consultarMascotas();
     }
+
     private void consultarMascotas() {
         CollectionReference mascotasRef = db.collection("pet");
         mascotasRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -145,26 +146,58 @@ public class GestionCitaActivity extends AppCompatActivity {
         if (nombreCliente.isEmpty() || fechaCita.isEmpty() || horaCita.isEmpty()) {
             Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
         } else {
-            // Crear un objeto Map con los datos de la cita
-            Map<String, Object> cita = new HashMap<>();
-            cita.put("nombreCliente", nombreCliente);
-            cita.put("fechaCita", fechaCita);
-            cita.put("horaCita", horaCita);
+            // Verificar disponibilidad del intervalo horario
+            String intervaloInicio = "09:00"; // Hora de inicio del intervalo
+            String intervaloFin = "17:00";   // Hora de fin del intervalo
+            String horaCitaInicio = horaCita.substring(0, 5); // Extraer solo la hora de la cita
 
-            // Guardar la cita en Firestore
-            db.collection("citas")
-                    .add(cita)
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            if (horaCitaInicio.compareTo(intervaloInicio) < 0 || horaCitaInicio.compareTo(intervaloFin) > 0) {
+                // La cita no está dentro del intervalo horario permitido
+                Toast.makeText(this, "La cita debe estar dentro del intervalo horario de 09:00 a 17:00", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Consultar citas existentes para la fecha y el intervalo horario
+            CollectionReference citasRef = db.collection("citas");
+            citasRef.whereEqualTo("fechaCita", fechaCita)
+                    .whereGreaterThanOrEqualTo("horaCita", intervaloInicio)
+                    .whereLessThanOrEqualTo("horaCita", intervaloFin)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(GestionCitaActivity.this, "Cita guardada correctamente", Toast.LENGTH_SHORT).show();
-                                // Limpiar los campos después de guardar la cita
-                                editTextNombreCliente.setText("");
-                                textViewFechaSeleccionada.setText("");
-                                textViewHoraSeleccionada.setText("");
+                                if (task.getResult().isEmpty()) {
+                                    // El intervalo horario está disponible, guardar la cita
+                                    Map<String, Object> cita = new HashMap<>();
+                                    cita.put("nombreCliente", nombreCliente);
+                                    cita.put("fechaCita", fechaCita);
+                                    cita.put("horaCita", horaCita);
+
+                                    db.collection("citas")
+                                            .add(cita)
+                                            .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(GestionCitaActivity.this, "Cita guardada correctamente", Toast.LENGTH_SHORT).show();
+                                                        // Limpiar los campos después de guardar la cita
+                                                        editTextNombreCliente.setText("");
+                                                        textViewFechaSeleccionada.setText("");
+                                                        textViewHoraSeleccionada.setText("");
+                                                    } else {
+                                                        Toast.makeText(GestionCitaActivity.this, "Error al guardar la cita", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                } else {
+                                    // El intervalo horario está completo, mostrar mensaje
+                                    Toast.makeText(GestionCitaActivity.this, "El intervalo horario de " + intervaloInicio + " a " + intervaloFin + " ya está completo para esta fecha", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                Toast.makeText(GestionCitaActivity.this, "Error al guardar la cita", Toast.LENGTH_SHORT).show();
+                                // Error al consultar citas existentes
+                                Log.e("TAG", "Error al consultar citas existentes", task.getException());
+                                Toast.makeText(GestionCitaActivity.this, "Error al consultar citas existentes", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

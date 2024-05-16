@@ -43,8 +43,10 @@ dependencies {
     implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
 
+
     implementation ("com.airbnb.android:lottie:3.4.2")
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+    implementation(libs.firebase.bom.v3300)
+    implementation("com.firebaseui:firebase-ui-firestore:8.0.1")
 
 
 

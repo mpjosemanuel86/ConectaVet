@@ -2,12 +2,14 @@ package com.mpjosemanuel86.conectavet.model;
 
 public class Cliente {
     String nombreCliente, direccionCliente, telefonoCliente;
-    public Cliente(){}
+
+    public Cliente() {}
 
     public Cliente(String nombreCliente, String direccionCliente, String telefonoCliente) {
         this.nombreCliente = nombreCliente;
         this.direccionCliente = direccionCliente;
         this.telefonoCliente = telefonoCliente;
+
     }
 
     public String getNombreCliente() {

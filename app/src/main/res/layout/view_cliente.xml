@@ -27,7 +27,7 @@
                 android:id="@+id/photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                app:srcCompat="@drawable/ic_person" />
         </androidx.cardview.widget.CardView>
 
         <Space
@@ -84,11 +84,12 @@
             android:layout_width="10dp"
             android:layout_height="wrap_content" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btn_eliminar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/teal_700"
+            android:background="@color/red"
+            android:tint="@color/white"
             android:src="@drawable/ic_delete"
             android:padding="5dp" />
 
