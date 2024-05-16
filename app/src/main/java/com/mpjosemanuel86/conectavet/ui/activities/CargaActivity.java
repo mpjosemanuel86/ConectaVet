@@ -1,4 +1,4 @@
-package com.mpjosemanuel86.conectavet;
+package com.mpjosemanuel86.conectavet.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.mpjosemanuel86.conectavet.R;
 
 /**
  * Esta actividad se encarga de mostrar una pantalla de carga al inicio de la aplicación

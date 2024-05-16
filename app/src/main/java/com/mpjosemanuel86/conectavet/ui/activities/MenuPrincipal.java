@@ -1,4 +1,4 @@
-package com.mpjosemanuel86.conectavet;
+package com.mpjosemanuel86.conectavet.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,8 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mpjosemanuel86.conectavet.ui.GestionClienteActivity;
-import com.mpjosemanuel86.conectavet.ui.GestionMascotaActivity;
+import com.mpjosemanuel86.conectavet.R;
 
 public class MenuPrincipal extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.mpjosemanuel86.conectavet;
+package com.mpjosemanuel86.conectavet.ui.fragment;
 
 import android.os.Bundle;
 
@@ -16,14 +16,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mpjosemanuel86.conectavet.R;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class CrearMascotaFragment extends DialogFragment{
+public class CrearMascotaFragment extends DialogFragment {
 
     Button btnGuardarDatos;
     EditText nombreCliente, direccionCliente, telefonoCliente, nombreMascota, especieMascota, razaMascota, tamanioMascota, sexoMascota, fechaNacimientoMascota, colorMascota;
@@ -31,7 +34,9 @@ public class CrearMascotaFragment extends DialogFragment{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);}
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,27 +75,34 @@ public class CrearMascotaFragment extends DialogFragment{
 
         return v;
     }
-    private void postPet(String nombreMascotaPet, String especieMascotaPet, String razaMascotaPet, String tamanioMascotaPet, String fechaNacimientoMascotaPet, String colorMascotaPet) {
-        Map<String, Object> map =  new HashMap<>();
-        map.put("nombreMascota", nombreMascotaPet);
-        map.put("especieMascota", especieMascotaPet);
-        map.put("razaMascota", razaMascotaPet);
-        map.put("tamanioMascota", tamanioMascotaPet);
-        map.put("fechaNacimientoMascota", fechaNacimientoMascotaPet);
-        map.put("colorMascota", colorMascotaPet);
 
-        mfirestore.collection("pet").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(getContext(),"Creado exitosamente", Toast.LENGTH_SHORT).show();
-                getDialog().dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(),"Error al ingresar", Toast.LENGTH_SHORT).show();
-                Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
-            }
-        });
+    private void postPet(String nombreMascotaPet, String especieMascotaPet, String razaMascotaPet, String tamanioMascotaPet, String fechaNacimientoMascotaPet, String colorMascotaPet) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("nombreMascota", nombreMascotaPet);
+            map.put("especieMascota", especieMascotaPet);
+            map.put("razaMascota", razaMascotaPet);
+            map.put("tamanioMascota", tamanioMascotaPet);
+            map.put("fechaNacimientoMascota", fechaNacimientoMascotaPet);
+            map.put("colorMascota", colorMascotaPet);
+            map.put("uid", uid);
+
+            mfirestore.collection("pet").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Toast.makeText(getContext(), "Creado exitosamente", Toast.LENGTH_SHORT).show();
+                    getDialog().dismiss();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "Error al ingresar", Toast.LENGTH_SHORT).show();
+                    Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
+                }
+            });
+        }
     }
 }

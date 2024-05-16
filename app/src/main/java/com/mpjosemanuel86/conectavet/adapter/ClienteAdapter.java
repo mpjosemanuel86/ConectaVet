@@ -4,6 +4,8 @@ package com.mpjosemanuel86.conectavet.adapter;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,24 +54,46 @@ public class ClienteAdapter extends FirestoreRecyclerAdapter<Cliente, ClienteAda
                 borrarCliente(id);
 
                 }
-
-
         });
     }
 
     private void borrarCliente(String id) {
-        mFirestore.collection("cliente").document(id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(activity,"Eliminado correctamente", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(activity,"Error al eliminar", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+        String idString = String.valueOf(id);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage("¿Estás seguro de eliminar este cliente de forma permanente?")
+                        .setTitle("Confirmar Eliminación")
+                                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        mFirestore.collection("cliente").document(idString).delete()
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        Toast.makeText(activity, "Cliente eliminado correctamente", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(activity, "Error al eliminar cliente", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                    }
+                                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+
+                    });
+        AlertDialog dialog= builder.create();
+                dialog.show();
+                }
+
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

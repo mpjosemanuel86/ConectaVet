@@ -1,4 +1,4 @@
-package com.mpjosemanuel86.conectavet;
+package com.mpjosemanuel86.conectavet.ui.fragment;
 
 import android.os.Bundle;
 
@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mpjosemanuel86.conectavet.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,9 +63,9 @@ public class CrearClienteFragment extends DialogFragment{
             }
         });
 
-
         return v;
     }
+
     private void postCliente(String nombreClientePet, String direccionClientePet, String telefonoClientePet) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {

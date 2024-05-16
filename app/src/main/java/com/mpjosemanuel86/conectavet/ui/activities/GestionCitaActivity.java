@@ -1,4 +1,4 @@
-package com.mpjosemanuel86.conectavet;
+package com.mpjosemanuel86.conectavet.ui.activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.mpjosemanuel86.conectavet.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
