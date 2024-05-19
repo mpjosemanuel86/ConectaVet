@@ -65,7 +65,6 @@ public class CrearClienteFragment extends DialogFragment{
 
         return v;
     }
-
     private void postCliente(String nombreClientePet, String direccionClientePet, String telefonoClientePet) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
