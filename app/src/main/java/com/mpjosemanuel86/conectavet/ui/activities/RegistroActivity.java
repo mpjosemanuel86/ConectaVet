@@ -130,11 +130,8 @@ public class RegistroActivity extends AppCompatActivity {
         progressDialog.setMessage("Guardando su información");
         progressDialog.show();
 
-        //Obetener la identificación de usuario actual
         String uid = firebaseAuth.getUid();
-        // Crear un HashMap para almacenar los datos del usuario/veterinario
         HashMap<String, String> datosVeterinario = new HashMap<>();
-        //todo seguir xaqui
 
         datosVeterinario.put("uid", uid);
         datosVeterinario.put("correo", correo);
@@ -164,7 +161,6 @@ public class RegistroActivity extends AppCompatActivity {
                         Toast.makeText(RegistroActivity.this, "Error al guardar la información: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
 
     @Override

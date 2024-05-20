@@ -1,8 +1,4 @@
 package com.mpjosemanuel86.conectavet.adapter;
-
-
-
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -28,23 +24,17 @@ import com.mpjosemanuel86.conectavet.R;
 import com.mpjosemanuel86.conectavet.model.Cliente;
 
 import java.util.List;
-
 public class ClienteAdapter extends FirestoreRecyclerAdapter<Cliente, ClienteAdapter.ViewHolder> {
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-
     Activity activity;
-
     public ClienteAdapter(@NonNull FirestoreRecyclerOptions<Cliente> options, Activity activity) {
-
         super(options);
         this.activity = activity;
     }
-
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int i, @NonNull Cliente cliente) {
         DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(viewHolder.getAdapterPosition());
         final String id = documentSnapshot.getId();
-
         viewHolder.direccionCliente.setText(cliente.getDireccionCliente());
         viewHolder.nombreCliente.setText(cliente.getNombreCliente());
         viewHolder.telefonoCliente.setText(cliente.getTelefonoCliente());
@@ -52,14 +42,11 @@ public class ClienteAdapter extends FirestoreRecyclerAdapter<Cliente, ClienteAda
             @Override
             public void onClick(View v) {
                 borrarCliente(id);
-
                 }
         });
     }
-
     private void borrarCliente(String id) {
         String idString = String.valueOf(id);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage("¿Estás seguro de eliminar este cliente de forma permanente?")
                         .setTitle("Confirmar Eliminación")
@@ -86,25 +73,19 @@ public class ClienteAdapter extends FirestoreRecyclerAdapter<Cliente, ClienteAda
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
                     }
-
                     });
         AlertDialog dialog= builder.create();
                 dialog.show();
                 }
-
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_cliente, parent, false);
         return new ViewHolder(v);
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView direccionCliente, nombreCliente, telefonoCliente;
         ImageButton btn_eliminar;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             direccionCliente = itemView.findViewById(R.id.tvDireccion);
