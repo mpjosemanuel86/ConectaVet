@@ -1,11 +1,8 @@
 package com.mpjosemanuel86.conectavet.ui.fragment;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,20 +17,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpjosemanuel86.conectavet.R;
-
 import java.util.HashMap;
 import java.util.Map;
 
-
-public class CrearClienteFragment extends DialogFragment{
+public class CrearClienteFragment extends DialogFragment {
 
     Button btnGuardarDatos;
-    EditText nombreCliente, direccionCliente, telefonoCliente, nombreMascota, especieMascota, razaMascota, tamanioMascota, sexoMascota, fechaNacimientoMascota, colorMascota;
+    EditText nombreCliente, direccionCliente, telefonoCliente;
     private FirebaseFirestore mfirestore;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);}
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,9 +50,8 @@ public class CrearClienteFragment extends DialogFragment{
                 String direccionClientePet = direccionCliente.getText().toString().trim();
                 String telefonoClientePet = telefonoCliente.getText().toString().trim();
 
-
-                if (nombreClientePet.isEmpty() && direccionClientePet.isEmpty() && telefonoClientePet.isEmpty()) {
-                    Toast.makeText(getContext(), "Ingresar los datos", Toast.LENGTH_SHORT).show();
+                if (nombreClientePet.isEmpty() || direccionClientePet.isEmpty() || telefonoClientePet.isEmpty()) {
+                    Toast.makeText(getContext(), "Ingresar todos los datos", Toast.LENGTH_SHORT).show();
                 } else {
                     postCliente(nombreClientePet, direccionClientePet, telefonoClientePet);
                 }
@@ -65,33 +60,38 @@ public class CrearClienteFragment extends DialogFragment{
 
         return v;
     }
+
     private void postCliente(String nombreClientePet, String direccionClientePet, String telefonoClientePet) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            String uid = currentUser.getUid();
+            String uid = currentUser.getUid(); // UID del veterinario
 
-            Map<String, Object> map = new HashMap<>();
-            map.put("nombreCliente", nombreClientePet);
-            map.put("direccionCliente", direccionClientePet);
-            map.put("telefonoCliente", telefonoClientePet);
-            map.put("uid", uid);
+            Map<String, Object> clienteData = new HashMap<>();
+            clienteData.put("nombreCliente", nombreClientePet);
+            clienteData.put("direccionCliente", direccionClientePet);
+            clienteData.put("telefonoCliente", telefonoClientePet);
+            clienteData.put("uid", uid); // Mantener el UID del veterinario
 
-
-            mfirestore.collection("cliente").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                @Override
-                public void onSuccess(DocumentReference documentReference) {
-                    Toast.makeText(getContext(), "Creado exitosamente", Toast.LENGTH_SHORT).show();
-                    getDialog().dismiss();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getContext(), "Error al ingresar", Toast.LENGTH_SHORT).show();
-                    Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
-                }
-            });
+            // Crear cliente
+            mfirestore.collection("cliente")
+                    .add(clienteData)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference clienteRef) {
+                            Log.d("postCliente", "Cliente creado con ID: " + clienteRef.getId());
+                            Toast.makeText(getContext(), "Cliente creado exitosamente", Toast.LENGTH_SHORT).show();
+                            getDialog().dismiss();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Error al ingresar datos", Toast.LENGTH_SHORT).show();
+                            Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
+                        }
+                    });
         } else {
             Toast.makeText(getContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
-        }
-        }
+    }
+}
