@@ -2,23 +2,26 @@ package com.mpjosemanuel86.conectavet.model;
 
 public class Mascota {
 
-    String especieMascota, nombreMascota, razaMascota, generoMascota;
+    private String especieMascota;
+    private String nombreMascota;
+    private String razaMascota;
+    private String generoMascota;
+    private String fechaNacimientoMascota;
+    private String colorMascota;
+    private String clienteUid;
 
     public Mascota() {
     }
 
-    public Mascota(String especieMascota,  String nombreMascota, String razaMascota, String generoMascota) {
-
+    public Mascota(String especieMascota, String nombreMascota, String razaMascota, String generoMascota, String fechaNacimientoMascota, String colorMascota, String clienteUid) {
         this.especieMascota = especieMascota;
         this.nombreMascota = nombreMascota;
         this.razaMascota = razaMascota;
         this.generoMascota = generoMascota;
-
-
+        this.fechaNacimientoMascota = fechaNacimientoMascota;
+        this.colorMascota = colorMascota;
+        this.clienteUid = clienteUid;
     }
-
-
-
 
     public String getEspecieMascota() {
         return especieMascota;
@@ -27,7 +30,6 @@ public class Mascota {
     public void setEspecieMascota(String especieMascota) {
         this.especieMascota = especieMascota;
     }
-
 
     public String getNombreMascota() {
         return nombreMascota;
@@ -49,8 +51,31 @@ public class Mascota {
         return generoMascota;
     }
 
-    public void setGeneroMascota(String tamanioMascota) {
-        this.generoMascota = tamanioMascota;
+    public void setGeneroMascota(String generoMascota) {
+        this.generoMascota = generoMascota;
+    }
+
+    public String getFechaNacimientoMascota() {
+        return fechaNacimientoMascota;
+    }
+
+    public void setFechaNacimientoMascota(String fechaNacimientoMascota) {
+        this.fechaNacimientoMascota = fechaNacimientoMascota;
+    }
+
+    public String getColorMascota() {
+        return colorMascota;
+    }
+
+    public void setColorMascota(String colorMascota) {
+        this.colorMascota = colorMascota;
+    }
+
+    public String getClienteUid() {
+        return clienteUid;
+    }
+
+    public void setClienteUid(String clienteUid) {
+        this.clienteUid = clienteUid;
     }
 }
-

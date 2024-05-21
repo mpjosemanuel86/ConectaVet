@@ -4,93 +4,69 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.mpjosemanuel86.conectavet.R;
 import com.mpjosemanuel86.conectavet.adapter.MascotaAdapter;
 import com.mpjosemanuel86.conectavet.model.Mascota;
 import com.mpjosemanuel86.conectavet.ui.fragment.CrearMascotaFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+public class GestionMascotaActivity extends AppCompatActivity {
 
-public class GestionMascotaActivity extends AppCompatActivity implements CrearMascotaFragment.OnMascotaSavedListener {
-
-    Button btn_add_fragment_mascota;
-    RecyclerView mRecycler;
-    MascotaAdapter mAdapter;
-    FirebaseFirestore mFirestore;
-    FirebaseUser currentUser;
-    List<Mascota> todasLasMascotas;
+    private Button btn_add_fragment;
+    private RecyclerView recyclerView;
+    private MascotaAdapter mAdapter;
+    private FirebaseFirestore mFirestore;
+    private FirebaseUser currentUser;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_mascota);
 
+        // Inicializar Firebase Firestore
         mFirestore = FirebaseFirestore.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        mRecycler = findViewById(R.id.rvMascotas);
-        mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        todasLasMascotas = new ArrayList<>();
 
+        // Configurar RecyclerView
+        recyclerView = findViewById(R.id.rvMascotas);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Comprobar si el usuario está autenticado
         if (currentUser != null) {
-            obtenerTodasLasMascotas();
+            String uid = currentUser.getUid();
+
+            // Crear la consulta para obtener las mascotas del usuario actual
+            Query query = mFirestore.collection("pet").whereEqualTo("uid", uid);
+
+            // Configurar FirestoreRecyclerOptions
+            FirestoreRecyclerOptions<Mascota> firestoreRecyclerOptions =
+                    new FirestoreRecyclerOptions.Builder<Mascota>().setQuery(query, Mascota.class).build();
+
+            // Inicializar el adaptador de las mascotas
+            mAdapter = new MascotaAdapter(firestoreRecyclerOptions, this);
+            recyclerView.setAdapter(mAdapter);
         } else {
             Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
 
-        btn_add_fragment_mascota = findViewById(R.id.btnAgregarMascota2);
-
-        btn_add_fragment_mascota.setOnClickListener(new View.OnClickListener() {
+        // Configurar el botón para agregar mascotas
+        btn_add_fragment = findViewById(R.id.btnAgregarMascota2);
+        btn_add_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Mostrar el fragmento para agregar mascotas
                 CrearMascotaFragment fm = new CrearMascotaFragment();
-                fm.setOnMascotaSavedListener(GestionMascotaActivity.this); // Asignar el listener
                 fm.show(getSupportFragmentManager(), "Navegar a fragment");
             }
         });
-    }
-
-    private void obtenerTodasLasMascotas() {
-        mFirestore.collection("cliente").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                for (DocumentSnapshot clienteSnapshot : task.getResult()) {
-                    DocumentReference clienteRef = clienteSnapshot.getReference();
-                    CollectionReference mascotasRef = clienteRef.collection("mascotas");
-
-                    mascotasRef.get().addOnCompleteListener(task1 -> {
-                        if (task1.isSuccessful()) {
-                            for (DocumentSnapshot mascotaSnapshot : task1.getResult()) {
-                                Mascota mascota = mascotaSnapshot.toObject(Mascota.class);
-                                todasLasMascotas.add(mascota);
-                            }
-                            // Configurar el adaptador después de obtener todas las mascotas
-                            configurarAdaptador();
-                        } else {
-                            Toast.makeText(this, "Error al obtener mascotas", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            } else {
-                Toast.makeText(this, "Error al obtener clientes", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void configurarAdaptador() {
-        mAdapter = new MascotaAdapter(todasLasMascotas);
-        mRecycler.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -107,13 +83,5 @@ public class GestionMascotaActivity extends AppCompatActivity implements CrearMa
         if (mAdapter != null) {
             mAdapter.stopListening();
         }
-    }
-
-    // Implementar el método onMascotaSaved de la interfaz OnMascotaSavedListener
-    @Override
-    public void onMascotaSaved() {
-        // Limpiar la lista y volver a obtener todas las mascotas
-        todasLasMascotas.clear();
-        obtenerTodasLasMascotas();
     }
 }

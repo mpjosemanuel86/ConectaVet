@@ -27,6 +27,9 @@ import java.util.List;
 public class ClienteAdapter extends FirestoreRecyclerAdapter<Cliente, ClienteAdapter.ViewHolder> {
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     Activity activity;
+
+
+
     public ClienteAdapter(@NonNull FirestoreRecyclerOptions<Cliente> options, Activity activity) {
         super(options);
         this.activity = activity;

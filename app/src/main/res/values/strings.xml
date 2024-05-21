@@ -25,6 +25,8 @@
     <!--ACTIVIDAD GESTIÓN CLIENTE-->
     <string name="AgregarCliente">Agregar cliente</string>
 
+    <!--ACTIVIDAD GESTIÓN MASCOTA-->
+    <string name="AgregarMascota">Agregar mascota</string>
     <!--ACTIVIDAD LOGIN-->
     <string name="IniciarSesionTXT">Iniciar sesión</string>
     <string name="CorreoLogin">Correo</string>

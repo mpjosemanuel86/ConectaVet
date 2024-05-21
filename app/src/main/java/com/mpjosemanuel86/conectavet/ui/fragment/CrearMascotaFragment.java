@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mpjosemanuel86.conectavet.R;
 import com.mpjosemanuel86.conectavet.model.Cliente;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,23 +78,36 @@ public class CrearMascotaFragment extends DialogFragment {
         btnGuardarDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombreMascotaPet = nombreMascota.getText().toString().trim();
-                String especieMascotaPet = especieMascota.getText().toString().trim();
-                String razaMascotaPet = razaMascota.getText().toString().trim();
-                String tamanioMascotaPet = tamanioMascota.getText().toString().trim();
-                String fechaNacimientoMascotaPet = fechaNacimientoMascota.getText().toString().trim();
-                String colorMascotaPet = colorMascota.getText().toString().trim();
-                Cliente clienteSeleccionado = (Cliente) clientesSpinner.getSelectedItem();
+                if (validarDatos()) {
+                    String nombreMascotaPet = nombreMascota.getText().toString().trim();
+                    String especieMascotaPet = especieMascota.getText().toString().trim();
+                    String razaMascotaPet = razaMascota.getText().toString().trim();
+                    String tamanioMascotaPet = tamanioMascota.getText().toString().trim();
+                    String sexoMascotaPet = sexoMascota.getText().toString().trim();
+                    String fechaNacimientoMascotaPet = fechaNacimientoMascota.getText().toString().trim();
+                    String colorMascotaPet = colorMascota.getText().toString().trim();
+                    Cliente clienteSeleccionado = (Cliente) clientesSpinner.getSelectedItem();
 
-                if (nombreMascotaPet.isEmpty() || especieMascotaPet.isEmpty() || razaMascotaPet.isEmpty() || tamanioMascotaPet.isEmpty() || fechaNacimientoMascotaPet.isEmpty() || colorMascotaPet.isEmpty()) {
-                    Toast.makeText(getContext(), "Ingresar todo los datos de la mascota", Toast.LENGTH_SHORT).show();
-                } else {
-                    postPet(nombreMascotaPet, especieMascotaPet, razaMascotaPet, tamanioMascotaPet, fechaNacimientoMascotaPet, colorMascotaPet, clienteSeleccionado.getUid());
+                    postPet(nombreMascotaPet, especieMascotaPet, razaMascotaPet, tamanioMascotaPet, sexoMascotaPet, fechaNacimientoMascotaPet, colorMascotaPet, clienteSeleccionado);
                 }
             }
         });
 
         return v;
+    }
+
+    private boolean validarDatos() {
+        if (nombreMascota.getText().toString().trim().isEmpty() ||
+                especieMascota.getText().toString().trim().isEmpty() ||
+                razaMascota.getText().toString().trim().isEmpty() ||
+                tamanioMascota.getText().toString().trim().isEmpty() ||
+                sexoMascota.getText().toString().trim().isEmpty() ||
+                fechaNacimientoMascota.getText().toString().trim().isEmpty() ||
+                colorMascota.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getContext(), "Ingresar todos los datos de la mascota", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private void cargarClientes() {
@@ -125,7 +140,7 @@ public class CrearMascotaFragment extends DialogFragment {
         }
     }
 
-    private void postPet(String nombreMascotaPet, String especieMascotaPet, String razaMascotaPet, String tamanioMascotaPet, String fechaNacimientoMascotaPet, String colorMascotaPet, String clienteUid) {
+    private void postPet(String nombreMascotaPet, String especieMascotaPet, String razaMascotaPet, String tamanioMascotaPet, String sexoMascotaPet, String fechaNacimientoMascotaPet, String colorMascotaPet, Cliente clienteSeleccionado) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             String veterinarioUid = currentUser.getUid(); // Obtener el UID del veterinario actual
@@ -137,9 +152,11 @@ public class CrearMascotaFragment extends DialogFragment {
             mascotaData.put("especieMascota", especieMascotaPet);
             mascotaData.put("razaMascota", razaMascotaPet);
             mascotaData.put("tamanioMascota", tamanioMascotaPet);
+            mascotaData.put("sexoMascota", sexoMascotaPet);
             mascotaData.put("fechaNacimientoMascota", fechaNacimientoMascotaPet);
             mascotaData.put("colorMascota", colorMascotaPet);
             mascotaData.put("uid", veterinarioUid); // Incluir el UID del veterinario
+            mascotaData.put("clienteUid", clienteSeleccionado.getUid()); // Incluir el UID del cliente
 
             petsRef.set(mascotaData)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -147,7 +164,7 @@ public class CrearMascotaFragment extends DialogFragment {
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(getContext(), "Mascota creada exitosamente en la colección pets", Toast.LENGTH_SHORT).show();
                             if (listener != null) {
-                                listener.onMascotaSaved(); // Notificar al listener
+                                listener.onMascotaSaved();
                             }
                             getDialog().dismiss();
                         }
@@ -160,22 +177,6 @@ public class CrearMascotaFragment extends DialogFragment {
                         }
                     });
 
-            // Agregar la mascota a la subcolección de mascotas del cliente seleccionado
-            DocumentReference clienteRef = mfirestore.collection("cliente").document(clienteUid);
-            clienteRef.collection("mascotas").add(mascotaData)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getContext(), "Mascota creada exitosamente para el cliente", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), "Error al crear mascota para el cliente", Toast.LENGTH_SHORT).show();
-                            Log.e("ERROR", "Error al crear mascota para el cliente: " + e.getMessage());
-                        }
-                    });
         } else {
             Toast.makeText(getContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }

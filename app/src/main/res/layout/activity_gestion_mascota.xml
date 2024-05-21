@@ -31,7 +31,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/AgregarCliente"
+        android:text="@string/AgregarMascota"
         app:layout_constraintTop_toBottomOf="@id/rvMascotas"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
