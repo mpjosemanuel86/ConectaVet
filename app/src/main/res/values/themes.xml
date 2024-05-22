@@ -4,5 +4,5 @@
         <!-- Configuraciones para el modo claro -->
     </style>
 
-    <style name="Theme.ConectaVet" parent="Base.Theme.ConectaVet" />
+
 </resources>
