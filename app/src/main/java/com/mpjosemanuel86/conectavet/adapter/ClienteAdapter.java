@@ -1,9 +1,11 @@
 package com.mpjosemanuel86.conectavet.adapter;
+import static android.content.ContentValues.TAG;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +46,7 @@ public class ClienteAdapter extends FirestoreRecyclerAdapter<Cliente, ClienteAda
     protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int i, @NonNull Cliente cliente) {
         DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(viewHolder.getAdapterPosition());
         final String id = documentSnapshot.getId();
-
+        Log.d(TAG, id);
         viewHolder.direccionCliente.setText(cliente.getDireccionCliente());
         viewHolder.nombreCliente.setText(cliente.getNombreCliente());
         viewHolder.telefonoCliente.setText(cliente.getTelefonoCliente());

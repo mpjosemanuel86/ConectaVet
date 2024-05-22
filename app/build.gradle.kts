@@ -53,7 +53,7 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.material.v140)
     implementation(libs.firebase.auth)
-    implementation("com.google.firebase:firebase-database:19.6.0")
+    implementation("com.google.firebase:firebase-database:21.0.0")
 
 
 
@@ -62,4 +62,6 @@ dependencies {
     implementation ("com.google.firebase:firebase-analytics")
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    //implementation("com.android.tools.build:gradle:8.2.2")
 }

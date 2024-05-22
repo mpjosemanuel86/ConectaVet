@@ -26,6 +26,7 @@ public class MenuPrincipal extends AppCompatActivity {
     Button CerrarSesion, botonClientes, botonMascotas, botonCitas;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
+    String userFirebaseUID;
 
     TextView NombresPrincipal, CorreoPrincipal;
     ProgressBar progressBarDatos;
@@ -46,16 +47,15 @@ public class MenuPrincipal extends AppCompatActivity {
         botonMascotas = findViewById(R.id.btnMascotas);
         botonCitas = findViewById(R.id.btnCitas);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        user = firebaseAuth.getCurrentUser();
-
+        userFirebaseUID = getIntent().getStringExtra("USER_ID");
+        user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
 
         botonClientes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuPrincipal.this, GestionClienteActivity.class);
-                intent.putExtra("USER_ID", user.getUid());
+                intent.putExtra("USER_ID", userFirebaseUID);
                 startActivity(intent);
             }
         });
@@ -63,7 +63,7 @@ public class MenuPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuPrincipal.this, GestionMascotaActivity.class);
-                intent.putExtra("USER_ID", user.getUid());
+                intent.putExtra("USER_ID", userFirebaseUID);
                 startActivity(intent);
             }
         });
@@ -71,7 +71,7 @@ public class MenuPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuPrincipal.this, GestionCitaActivity.class);
-                intent.putExtra("USER_ID", user.getUid());
+                intent.putExtra("USER_ID", userFirebaseUID);
                 startActivity(intent);
             }
         });
@@ -101,7 +101,7 @@ public class MenuPrincipal extends AppCompatActivity {
     }
 
     private void CargaDeDatos() {
-        DocumentReference docRef = db.collection("usuarios").document(user.getUid());
+        DocumentReference docRef = db.collection("users").document(userFirebaseUID);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -113,7 +113,7 @@ public class MenuPrincipal extends AppCompatActivity {
                     CorreoPrincipal.setVisibility(View.VISIBLE);
 
                     // Obtener los datos
-                    String nombres = documentSnapshot.getString("nombres");
+                    String nombres = documentSnapshot.getString("nombre");
                     String correo = documentSnapshot.getString("correo");
 
                     // Setear los datos en los respectivos TextView
@@ -137,7 +137,7 @@ public class MenuPrincipal extends AppCompatActivity {
     }
 
     private void SalirAplicacion() {
-        firebaseAuth.signOut();
+        FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(MenuPrincipal.this, MainActivity.class));
         Toast.makeText(this, "Cerraste sesión con éxito", Toast.LENGTH_SHORT).show();
     }

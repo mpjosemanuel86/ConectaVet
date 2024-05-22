@@ -102,8 +102,13 @@ public class LoginActivity extends AppCompatActivity {
 
                         if(task.isSuccessful()){
                             progressDialog.dismiss();
-                            FirebaseUser user= firebaseAuth.getCurrentUser();
-                            startActivity(new Intent(LoginActivity.this, MenuPrincipal.class));
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            Intent intent = new Intent(LoginActivity.this, MenuPrincipal.class);
+                            if(user != null) {
+                                intent.putExtra("USER_ID", user.getUid());
+                                startActivity(intent);
+                            }
+
                             Toast.makeText(LoginActivity.this, "Bienvenid@: "+user.getEmail(), Toast.LENGTH_SHORT).show();
                             finish();
                         }
@@ -118,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
-                        Toast.makeText(LoginActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
 
                     }
                 });

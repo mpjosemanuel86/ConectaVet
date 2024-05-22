@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpjosemanuel86.conectavet.R;
 
@@ -131,36 +132,33 @@ public class RegistroActivity extends AppCompatActivity {
         progressDialog.show();
 
         String uid = firebaseAuth.getUid();
-        HashMap<String, String> datosVeterinario = new HashMap<>();
+        HashMap<String, Object> datosVeterinario = new HashMap<>();
 
-        datosVeterinario.put("uid", uid);
+        //datosVeterinario.put("uid", uid);
         datosVeterinario.put("correo", correo);
-        datosVeterinario.put("nombres", nombre);
-        datosVeterinario.put("password", password);
+        datosVeterinario.put("nombre", nombre);
+        //datosVeterinario.put("password", password);
         // Agregar campos adicionales como listas vacías
 
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("usuarios")
-                .document(uid)
-                .set(datosVeterinario)
-                .addOnSuccessListener(new OnSuccessListener<Void>(){
-                    @Override
-                    public void onSuccess(Void unused) {
-                        progressDialog.dismiss();
-                        Toast.makeText(RegistroActivity.this, "Cuenta creada con éxito", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegistroActivity.this, MenuPrincipal.class));
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Toast.makeText(RegistroActivity.this, "Error al guardar la información: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+        DocumentReference docRef = db.collection("users").document(uid);
+        docRef.set(datosVeterinario)
+        .addOnSuccessListener(new OnSuccessListener<Void>(){
+            @Override
+            public void onSuccess(Void unused) {
+                progressDialog.dismiss();
+                Toast.makeText(RegistroActivity.this, "Cuenta creada con éxito", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(RegistroActivity.this, MenuPrincipal.class));
+                finish();
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(RegistroActivity.this, "Error al guardar la información: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

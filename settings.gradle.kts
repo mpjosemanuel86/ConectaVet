@@ -1,3 +1,5 @@
+import org.gradle.api.internal.artifacts.dependencies.DefaultDependencyConstraint.strictly
+
 pluginManagement {
     repositories {
         google {
@@ -11,13 +13,18 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    //repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+    }
+    versionCatalogs {
+
     }
 }
 
 rootProject.name = "ConectaVet"
 include(":app")
+

@@ -1,5 +1,7 @@
 package com.mpjosemanuel86.conectavet.ui.fragment;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Activity;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -105,7 +108,7 @@ public class CrearClienteFragment extends DialogFragment {
                 clienteData.put("nombreCliente", nombreClientePet);
                 clienteData.put("direccionCliente", direccionClientePet);
                 clienteData.put("telefonoCliente", telefonoClientePet);
-                clienteData.put("uid", uid); // Mantener el UID del veterinario
+                //clienteData.put("uid", uid); // Mantener el UID del veterinario
 
                 // Crear cliente
 
@@ -135,9 +138,28 @@ public class CrearClienteFragment extends DialogFragment {
             clienteData.put("nombreCliente", nombreClientePet);
             clienteData.put("direccionCliente", direccionClientePet);
             clienteData.put("telefonoCliente", telefonoClientePet);
-            clienteData.put("uid", uid); // Mantener el UID del veterinario
+            //clienteData.put("uid", uid); // Mantener el UID del veterinario
 
             // Crear cliente
+            DocumentReference docRef = mfirestore.collection("users").document(uid);
+            CollectionReference subColRef = docRef.collection("clientes");
+            subColRef.add(clienteData)
+            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Log.d("postCliente", "Cliente creado con ID: " + documentReference.getId());
+                    Toast.makeText(getContext(), "Cliente creado exitosamente", Toast.LENGTH_SHORT).show();
+                    getDialog().dismiss();
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "Error al ingresar datos", Toast.LENGTH_SHORT).show();
+                    Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
+                }
+            });
+            /*
             mfirestore.collection("cliente")
                     .add(clienteData)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -154,7 +176,8 @@ public class CrearClienteFragment extends DialogFragment {
                             Toast.makeText(getContext(), "Error al ingresar datos", Toast.LENGTH_SHORT).show();
                             Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
                         }
-                    });
+                    })
+             */
         } else {
             Toast.makeText(getContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
