@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    android:backgroundTint="#95A8A6"
+    android:backgroundTint="@color/purple_200"
     app:cardCornerRadius="20dp"
     app:cardElevation="0dp">
 
@@ -72,8 +72,9 @@
 
         </LinearLayout>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btn_editar"
+            android:src="@drawable/ic_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#3F6BF1"
@@ -87,8 +88,8 @@
             android:id="@+id/btn_eliminar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/red"
-            android:tint="@color/white"
+            android:background="@color/purple_200"
+            app:tint="@color/red"
             android:src="@drawable/ic_delete"
             android:padding="5dp" />
 

@@ -21,7 +21,7 @@ import com.mpjosemanuel86.conectavet.ui.fragment.CrearMascotaFragment;
 public class GestionMascotaActivity extends AppCompatActivity {
 
     private Button btn_add_fragment;
-    private RecyclerView recyclerView;
+    private RecyclerView mRecycler;
     private MascotaAdapter mAdapter;
     private FirebaseFirestore mFirestore;
     private FirebaseUser currentUser;
@@ -36,8 +36,8 @@ public class GestionMascotaActivity extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // Configurar RecyclerView
-        recyclerView = findViewById(R.id.rvMascotas);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecycler = findViewById(R.id.rvMascotas);
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
 
         // Comprobar si el usuario está autenticado
         if (currentUser != null) {
@@ -51,8 +51,9 @@ public class GestionMascotaActivity extends AppCompatActivity {
                     new FirestoreRecyclerOptions.Builder<Mascota>().setQuery(query, Mascota.class).build();
 
             // Inicializar el adaptador de las mascotas
-            mAdapter = new MascotaAdapter(firestoreRecyclerOptions, this);
-            recyclerView.setAdapter(mAdapter);
+            mAdapter = new MascotaAdapter(firestoreRecyclerOptions, this, getSupportFragmentManager());
+            mAdapter.notifyDataSetChanged();
+            mRecycler.setAdapter(mAdapter);
         } else {
             Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
@@ -72,16 +73,14 @@ public class GestionMascotaActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (mAdapter != null) {
-            mAdapter.startListening();
+        mAdapter.startListening();
         }
-    }
+
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (mAdapter != null) {
             mAdapter.stopListening();
         }
     }
-}
+

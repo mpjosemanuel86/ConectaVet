@@ -3,6 +3,8 @@ package com.mpjosemanuel86.conectavet.adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -21,64 +24,68 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpjosemanuel86.conectavet.R;
 import com.mpjosemanuel86.conectavet.model.Mascota;
+import com.mpjosemanuel86.conectavet.ui.fragment.CrearClienteFragment;
 
 public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAdapter.ViewHolder> {
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     Activity activity;
+    FragmentManager fm;
 
-    public MascotaAdapter(@NonNull FirestoreRecyclerOptions<Mascota> options, Activity activity) {
+    public MascotaAdapter(@NonNull FirestoreRecyclerOptions<Mascota> options, Activity activity, FragmentManager fm) {
         super(options);
         this.activity = activity;
+        this.fm = fm;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int i, @NonNull Mascota mascota) {
         DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(viewHolder.getAdapterPosition());
         final String id = documentSnapshot.getId();
+
         viewHolder.nombreMascota.setText(mascota.getNombreMascota());
         viewHolder.especieMascota.setText(mascota.getEspecieMascota());
         viewHolder.razaMascota.setText(mascota.getRazaMascota());
         // Asignar otros campos de Mascota a las vistas
 
+        viewHolder.btn_editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activity, CrearClienteFragment.class);
+                i.putExtra("id_cliente", id);
+                //  activity.startActivity(i);
+
+                CrearClienteFragment crearClienteFragment = new CrearClienteFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("id_cliente", id);
+                crearClienteFragment.setArguments(bundle);
+                crearClienteFragment.show(fm, "abrir fragment");
+            }
+        });
+
         viewHolder.btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 borrarMascota(id);
             }
         });
     }
 
     private void borrarMascota(String id) {
-        String idString = String.valueOf(id);
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage("¿Estás seguro de eliminar esta mascota de forma permanente?")
-                .setTitle("Confirmar Eliminación")
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        mFirestore.collection("pet").document(idString).delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(activity, "Mascota eliminada correctamente", Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(activity, "Error al eliminar mascota", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+        mFirestore.collection("pet").document(id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(activity, "Mascota eliminada correctamente", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener(){
+                .addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(activity, "Error al eliminar mascota", Toast.LENGTH_SHORT).show();
                     }
                 });
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
+
 
     @NonNull
     @Override
@@ -89,7 +96,7 @@ public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAda
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView nombreMascota, especieMascota, razaMascota;
-        ImageButton btn_eliminar;
+        ImageButton btn_eliminar, btn_editar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -97,6 +104,7 @@ public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAda
             especieMascota = itemView.findViewById(R.id.tvEspecie);
             razaMascota = itemView.findViewById(R.id.tvRaza);
             btn_eliminar = itemView.findViewById(R.id.btn_eliminar);
+            btn_editar = itemView.findViewById(R.id.btn_editar);
         }
     }
 }

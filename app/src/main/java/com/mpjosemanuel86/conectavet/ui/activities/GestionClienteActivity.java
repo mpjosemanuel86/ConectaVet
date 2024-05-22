@@ -46,7 +46,7 @@ public class GestionClienteActivity extends AppCompatActivity {
             FirestoreRecyclerOptions<Cliente> firestoreRecyclerOptions =
                     new FirestoreRecyclerOptions.Builder<Cliente>().setQuery(query, Cliente.class).build();
 
-            mAdapter = new ClienteAdapter(firestoreRecyclerOptions, this);
+            mAdapter = new ClienteAdapter(firestoreRecyclerOptions, this, getSupportFragmentManager());
             mAdapter.notifyDataSetChanged();
             mRecycler.setAdapter(mAdapter);
         } else {
