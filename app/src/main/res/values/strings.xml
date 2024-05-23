@@ -27,6 +27,14 @@
 
     <!--ACTIVIDAD GESTIÓN MASCOTA-->
     <string name="AgregarMascota">Agregar mascota</string>
+
+    <string name="selecciona_cliente">Seleccionar cliente</string>
+    <string name="selecciona_mascota">Seleccionar mascota</string>
+    <string name="selecciona_horario">Seleccionar horario</string>
+
+
+
+
     <!--ACTIVIDAD LOGIN-->
     <string name="IniciarSesionTXT">Iniciar sesión</string>
     <string name="CorreoLogin">Correo</string>

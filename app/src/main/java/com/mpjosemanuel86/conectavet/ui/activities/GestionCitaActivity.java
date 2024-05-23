@@ -1,7 +1,6 @@
 package com.mpjosemanuel86.conectavet.ui.activities;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,12 +35,12 @@ import java.util.Map;
 public class GestionCitaActivity extends AppCompatActivity {
 
     EditText editTextNombreCliente;
-    Button buttonSeleccionarFecha, buttonSeleccionarHora, buttonGuardarCita;
-    TextView textViewFechaSeleccionada, textViewHoraSeleccionada;
-    Spinner spinnerMascotas;
+    Button buttonSeleccionarFecha, buttonGuardarCita;
+    TextView textViewFechaSeleccionada;
+    Spinner spinnerMascotas, spinnerHorarios, spinnerClientes;
 
     Calendar calendar;
-    SimpleDateFormat dateFormatter, timeFormatter;
+    SimpleDateFormat dateFormatter;
 
     FirebaseFirestore db;
 
@@ -55,27 +53,19 @@ public class GestionCitaActivity extends AppCompatActivity {
 
         editTextNombreCliente = findViewById(R.id.editTextNombreCliente);
         buttonSeleccionarFecha = findViewById(R.id.buttonSeleccionarFecha);
-        buttonSeleccionarHora = findViewById(R.id.buttonSeleccionarHora);
         buttonGuardarCita = findViewById(R.id.buttonGuardarCita);
         textViewFechaSeleccionada = findViewById(R.id.textViewFechaSeleccionada);
-        textViewHoraSeleccionada = findViewById(R.id.textViewHoraSeleccionada);
         spinnerMascotas = findViewById(R.id.spinnerMascotas);
+        spinnerHorarios = findViewById(R.id.spinnerHorarios);
+        spinnerClientes = findViewById(R.id.spinnerClientes);
 
         calendar = Calendar.getInstance();
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        timeFormatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
         buttonSeleccionarFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mostrarSelectorFecha();
-            }
-        });
-
-        buttonSeleccionarHora.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarSelectorHora();
             }
         });
 
@@ -85,7 +75,48 @@ public class GestionCitaActivity extends AppCompatActivity {
                 guardarCita();
             }
         });
+
+        consultarClientes(); // Llamada al método para cargar los clientes
         consultarMascotas();
+        cargarHorariosEnSpinner();
+    }
+
+
+    private void consultarClientes() {
+        CollectionReference clientesRef = db.collection("cliente");
+        clientesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<String> nombresClientes = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String nombreCliente = document.getString("nombreCliente");
+                        nombresClientes.add(nombreCliente);
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(GestionCitaActivity.this,
+                            android.R.layout.simple_spinner_item, nombresClientes);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerClientes.setAdapter(adapter);
+                } else {
+                    Log.d("TAG", "Error al obtener los clientes: ", task.getException());
+                }
+            }
+        });
+    }
+
+    private void cargarHorariosEnSpinner() {
+        List<String> horarios = new ArrayList<>();
+        for (int hour = 9; hour < 17; hour++) {
+            horarios.add(String.format("%02d:00", hour));
+            horarios.add(String.format("%02d:30", hour));
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, horarios);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerHorarios.setAdapter(adapter);
     }
 
     private void consultarMascotas() {
@@ -101,7 +132,6 @@ public class GestionCitaActivity extends AppCompatActivity {
                         nombresMascotas.add(nombreMascota);
                     }
 
-                    // Llenar el Spinner con los nombres de las mascotas
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(GestionCitaActivity.this,
                             android.R.layout.simple_spinner_item, nombresMascotas);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -126,37 +156,17 @@ public class GestionCitaActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-
-    private void mostrarSelectorHora() {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendar.set(Calendar.MINUTE, minute);
-                textViewHoraSeleccionada.setText(timeFormatter.format(calendar.getTime()));
-            }
-        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
-        timePickerDialog.show();
-    }
-
     private void guardarCita() {
         String nombreCliente = editTextNombreCliente.getText().toString().trim();
         String fechaCita = textViewFechaSeleccionada.getText().toString().trim();
-        String horaCita = textViewHoraSeleccionada.getText().toString().trim();
+        String horaCita = spinnerHorarios.getSelectedItem().toString().trim();
 
         if (nombreCliente.isEmpty() || fechaCita.isEmpty() || horaCita.isEmpty()) {
             Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
         } else {
             // Verificar disponibilidad del intervalo horario
-            String intervaloInicio = "09:00"; // Hora de inicio del intervalo
-            String intervaloFin = "17:00";   // Hora de fin del intervalo
-            String horaCitaInicio = horaCita.substring(0, 5); // Extraer solo la hora de la cita
-
-            if (horaCitaInicio.compareTo(intervaloInicio) < 0 || horaCitaInicio.compareTo(intervaloFin) > 0) {
-                // La cita no está dentro del intervalo horario permitido
-                Toast.makeText(this, "La cita debe estar dentro del intervalo horario de 09:00 a 17:00", Toast.LENGTH_SHORT).show();
-                return;
-            }
+            String intervaloInicio = "09:00";
+            String intervaloFin = "17:00";
 
             // Consultar citas existentes para la fecha y el intervalo horario
             CollectionReference citasRef = db.collection("citas");
@@ -168,8 +178,18 @@ public class GestionCitaActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                if (task.getResult().isEmpty()) {
-                                    // El intervalo horario está disponible, guardar la cita
+                                boolean horarioDisponible = true;
+
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String horaExistente = document.getString("horaCita");
+                                    if (horaExistente.equals(horaCita)) {
+                                        horarioDisponible = false;
+                                        break;
+                                    }
+                                }
+
+                                if (horarioDisponible) {
+                                    // El horario está disponible, guardar la cita
                                     Map<String, Object> cita = new HashMap<>();
                                     cita.put("nombreCliente", nombreCliente);
                                     cita.put("fechaCita", fechaCita);
@@ -182,21 +202,18 @@ public class GestionCitaActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<DocumentReference> task) {
                                                     if (task.isSuccessful()) {
                                                         Toast.makeText(GestionCitaActivity.this, "Cita guardada correctamente", Toast.LENGTH_SHORT).show();
-                                                        // Limpiar los campos después de guardar la cita
                                                         editTextNombreCliente.setText("");
                                                         textViewFechaSeleccionada.setText("");
-                                                        textViewHoraSeleccionada.setText("");
+                                                        spinnerHorarios.setSelection(0);
                                                     } else {
                                                         Toast.makeText(GestionCitaActivity.this, "Error al guardar la cita", Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
                                             });
                                 } else {
-                                    // El intervalo horario está completo, mostrar mensaje
-                                    Toast.makeText(GestionCitaActivity.this, "El intervalo horario de " + intervaloInicio + " a " + intervaloFin + " ya está completo para esta fecha", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(GestionCitaActivity.this, "El horario de " + horaCita + " ya está ocupado para esta fecha", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                // Error al consultar citas existentes
                                 Log.e("TAG", "Error al consultar citas existentes", task.getException());
                                 Toast.makeText(GestionCitaActivity.this, "Error al consultar citas existentes", Toast.LENGTH_SHORT).show();
                             }

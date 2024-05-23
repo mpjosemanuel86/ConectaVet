@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpjosemanuel86.conectavet.R;
 import com.mpjosemanuel86.conectavet.model.Mascota;
 import com.mpjosemanuel86.conectavet.ui.fragment.CrearClienteFragment;
+import com.mpjosemanuel86.conectavet.ui.fragment.CrearMascotaFragment;
 
 public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAdapter.ViewHolder> {
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
@@ -50,15 +51,15 @@ public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAda
         viewHolder.btn_editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(activity, CrearClienteFragment.class);
-                i.putExtra("id_cliente", id);
+                Intent i = new Intent(activity, CrearMascotaFragment.class);
+                i.putExtra("id_mascota", id);
                 //  activity.startActivity(i);
 
-                CrearClienteFragment crearClienteFragment = new CrearClienteFragment();
+                CrearMascotaFragment crearMascotaFragment = new CrearMascotaFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("id_cliente", id);
-                crearClienteFragment.setArguments(bundle);
-                crearClienteFragment.show(fm, "abrir fragment");
+                bundle.putString("id_mascota", id);
+                crearMascotaFragment.setArguments(bundle);
+                crearMascotaFragment.show(fm, "abrir fragment");
             }
         });
 

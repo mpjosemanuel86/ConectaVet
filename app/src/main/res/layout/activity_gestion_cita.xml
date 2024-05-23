@@ -15,19 +15,21 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
 
-    <!-- Campo para ingresar el nombre del cliente -->
-    <EditText
-        android:id="@+id/editTextNombreCliente"
+    <!-- Spinner para seleccionar el cliente -->
+    <Spinner
+        android:id="@+id/spinnerClientes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre del Cliente"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:prompt="@string/selecciona_cliente"/>
 
+    <!-- Spinner para seleccionar la mascota -->
     <Spinner
         android:id="@+id/spinnerMascotas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:prompt="@+id/selecciona_mascota" />
+        android:prompt="@string/selecciona_mascota"
+        android:layout_marginBottom="16dp"/>
 
     <!-- Campo para seleccionar la fecha de la cita -->
     <Button
@@ -45,21 +47,13 @@
         android:text="Fecha de la Cita"
         android:layout_marginBottom="16dp"/>
 
-    <!-- Campo para seleccionar la hora de la cita -->
-    <Button
-        android:id="@+id/buttonSeleccionarHora"
+    <!-- Spinner para seleccionar la hora de la cita -->
+    <Spinner
+        android:id="@+id/spinnerHorarios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Seleccionar Hora"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- Campo para mostrar la hora seleccionada -->
-    <TextView
-        android:id="@+id/textViewHoraSeleccionada"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hora de la Cita"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:prompt="@string/selecciona_horario"/>
 
     <!-- Botón para guardar la cita -->
     <Button
@@ -68,13 +62,5 @@
         android:layout_height="wrap_content"
         android:text="Guardar Cita"
         android:layout_marginTop="16dp"/>
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
-
-    </Spinner>
-
 
 </LinearLayout>
