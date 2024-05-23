@@ -48,9 +48,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -82,7 +79,13 @@
                 android:text="Género"
                 android:textSize="16sp"/>
 
-
+            <TextView
+                android:id="@+id/tvCliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cliente"
+                android:textSize="16sp"/>
 
         </LinearLayout>
 

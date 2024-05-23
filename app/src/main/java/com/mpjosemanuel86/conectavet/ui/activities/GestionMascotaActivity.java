@@ -1,22 +1,34 @@
 package com.mpjosemanuel86.conectavet.ui.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mpjosemanuel86.conectavet.R;
 import com.mpjosemanuel86.conectavet.adapter.MascotaAdapter;
+import com.mpjosemanuel86.conectavet.model.Cliente;
 import com.mpjosemanuel86.conectavet.model.Mascota;
 import com.mpjosemanuel86.conectavet.ui.fragment.CrearMascotaFragment;
+
+import java.util.ArrayList;
 
 public class GestionMascotaActivity extends AppCompatActivity {
 
@@ -25,13 +37,15 @@ public class GestionMascotaActivity extends AppCompatActivity {
     private MascotaAdapter mAdapter;
     private FirebaseFirestore mFirestore;
     private FirebaseUser currentUser;
+    ArrayList<Mascota> array_mascota;
+    ArrayList<Cliente> array_cliente;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_mascota);
 
-        // Inicializar Firebase Firestore
         mFirestore = FirebaseFirestore.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -39,24 +53,67 @@ public class GestionMascotaActivity extends AppCompatActivity {
         mRecycler = findViewById(R.id.rvMascotas);
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        // Comprobar si el usuario está autenticado
+
+        DocumentReference docRef = mFirestore.collection("users").document(currentUser.getUid());
+        CollectionReference subColRef = docRef.collection("clientes");
+
+        subColRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                array_cliente = new ArrayList<>();
+                array_mascota = new ArrayList<>();
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    Cliente obj_cliente = documentSnapshot.toObject(Cliente.class);
+                    if(obj_cliente != null && obj_cliente.getNombreCliente() != null){
+                        Log.d("cliente", obj_cliente.getNombreCliente());
+                        Log.d("documentSnapshot", documentSnapshot.getId());
+                        DocumentReference docRefClient = subColRef.document(documentSnapshot.getId());
+                        CollectionReference subColRefPets = docRefClient.collection("pets");
+                        subColRefPets.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                array_cliente.add(obj_cliente);
+                                for(DocumentSnapshot documentSnapshot1: queryDocumentSnapshots){
+                                    Mascota obj_mascota = documentSnapshot1.toObject(Mascota.class);
+                                    if(obj_mascota != null && obj_mascota.getNombreMascota() != null){
+                                        Log.d("mascota", obj_mascota.getNombreMascota());
+                                        array_mascota.add(obj_mascota);
+                                    }
+                                }
+                            }
+                            }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e("ERROR", "Error al obtener datos: " + e.getMessage());
+                            }
+                        });
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("ERROR", "Error al obtener datos: " + e.getMessage());
+            }
+        });
+
+
+
         if (currentUser != null) {
             String uid = currentUser.getUid();
-
-            // Crear la consulta para obtener las mascotas del usuario actual
             Query query = mFirestore.collection("pet").whereEqualTo("uid", uid);
 
-            // Configurar FirestoreRecyclerOptions
             FirestoreRecyclerOptions<Mascota> firestoreRecyclerOptions =
                     new FirestoreRecyclerOptions.Builder<Mascota>().setQuery(query, Mascota.class).build();
 
-            // Inicializar el adaptador de las mascotas
             mAdapter = new MascotaAdapter(firestoreRecyclerOptions, this, getSupportFragmentManager());
             mAdapter.notifyDataSetChanged();
             mRecycler.setAdapter(mAdapter);
+            Log.d("UID", uid);
         } else {
             Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
+
 
         // Configurar el botón para agregar mascotas
         btn_add_fragment = findViewById(R.id.btnAgregarMascota2);

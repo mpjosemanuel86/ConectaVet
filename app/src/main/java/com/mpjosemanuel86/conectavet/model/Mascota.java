@@ -10,6 +10,8 @@ public class Mascota {
     private String colorMascota;
     private String clienteUid;
 
+    private String cliente_id;
+
     public Mascota() {
     }
 

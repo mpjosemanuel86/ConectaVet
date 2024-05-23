@@ -54,7 +54,7 @@ public class CrearClienteFragment extends DialogFragment {
         direccionCliente = v.findViewById(R.id.editTextDireccionCliente);
         telefonoCliente = v.findViewById(R.id.editTextTelefonoCliente);
         btnGuardarDatos = v.findViewById(R.id.btnGuardarDatos2);
-
+        getcliente();
         if(id_cliente == null||id_cliente==""){
             btnGuardarDatos.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,7 +72,6 @@ public class CrearClienteFragment extends DialogFragment {
             });
 
         }else{
-            getcliente();
             btnGuardarDatos.setText("update");
 
             btnGuardarDatos.setOnClickListener(new View.OnClickListener() {
@@ -159,25 +158,6 @@ public class CrearClienteFragment extends DialogFragment {
                     Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
                 }
             });
-            /*
-            mfirestore.collection("cliente")
-                    .add(clienteData)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference clienteRef) {
-                            Log.d("postCliente", "Cliente creado con ID: " + clienteRef.getId());
-                            Toast.makeText(getContext(), "Cliente creado exitosamente", Toast.LENGTH_SHORT).show();
-                            getDialog().dismiss();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), "Error al ingresar datos", Toast.LENGTH_SHORT).show();
-                            Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
-                        }
-                    })
-             */
         } else {
             Toast.makeText(getContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
