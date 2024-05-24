@@ -34,7 +34,7 @@ public class CrearClienteFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        if(getArguments()!=null){
+        if (getArguments() != null) {
             id_cliente = getArguments().getString("id_cliente");
         }
     }
@@ -52,7 +52,7 @@ public class CrearClienteFragment extends DialogFragment {
         telefonoCliente = v.findViewById(R.id.editTextTelefonoCliente);
         btnGuardarDatos = v.findViewById(R.id.btnGuardarDatos2);
 
-        if(id_cliente == null||id_cliente==""){
+        if (id_cliente == null || id_cliente == "") {
             btnGuardarDatos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -68,7 +68,7 @@ public class CrearClienteFragment extends DialogFragment {
                 }
             });
 
-        }else{
+        } else {
             getcliente();
             btnGuardarDatos.setText("update");
 
@@ -93,40 +93,8 @@ public class CrearClienteFragment extends DialogFragment {
     }
 
 
-
-
     private void updateCliente(String nombreClientePet, String direccionClientePet, String telefonoClientePet) {
 
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            if (currentUser != null) {
-                String uid = currentUser.getUid(); // UID del veterinario
-
-                Map<String, Object> clienteData = new HashMap<>();
-                clienteData.put("nombreCliente", nombreClientePet);
-                clienteData.put("direccionCliente", direccionClientePet);
-                clienteData.put("telefonoCliente", telefonoClientePet);
-                clienteData.put("uid", uid); // Mantener el UID del veterinario
-
-                // Crear cliente
-
-                mfirestore.collection("cliente").document(id_cliente).update(clienteData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(getContext(), "Cliente actualizado exitosamente", Toast.LENGTH_SHORT).show();
-                                getDialog().dismiss();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getContext(), "Error al actualizar datos", Toast.LENGTH_SHORT).show();
-                                Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
-                            }
-                        });
-            } else {
-                Toast.makeText(getContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
-            }
-        }
-    private void postCliente(String nombreClientePet, String direccionClientePet, String telefonoClientePet) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid(); // UID del veterinario
@@ -138,47 +106,103 @@ public class CrearClienteFragment extends DialogFragment {
             clienteData.put("uid", uid); // Mantener el UID del veterinario
 
             // Crear cliente
-            mfirestore.collection("cliente")
-                    .add(clienteData)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference clienteRef) {
-                            Log.d("postCliente", "Cliente creado con ID: " + clienteRef.getId());
-                            Toast.makeText(getContext(), "Cliente creado exitosamente", Toast.LENGTH_SHORT).show();
-                            getDialog().dismiss();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), "Error al ingresar datos", Toast.LENGTH_SHORT).show();
-                            Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
-                        }
-                    });
+
+            mfirestore.collection("cliente").document(id_cliente).update(clienteData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(getContext(), "Cliente actualizado exitosamente", Toast.LENGTH_SHORT).show();
+                    getDialog().dismiss();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "Error al actualizar datos", Toast.LENGTH_SHORT).show();
+                    Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
+                }
+            });
         } else {
             Toast.makeText(getContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void getcliente() {
-        mfirestore.collection("cliente").document(id_cliente).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                String nombreClienteText = documentSnapshot.getString("nombreCliente");
-                String direccionClienteText = documentSnapshot.getString("direccionCliente");
-                String telefonoClienteText = documentSnapshot.getString("telefonoCliente");
+    private void postCliente(String nombreClientePet, String direccionClientePet, String telefonoClientePet) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid(); // UID del veterinario
 
-                nombreCliente.setText(nombreClienteText);
-                direccionCliente.setText(direccionClienteText);
-                telefonoCliente.setText(telefonoClienteText);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
-            }
-        });
+
+            Map<String, Object> clienteData = new HashMap<>();
+            clienteData.put("nombreCliente", nombreClientePet);
+            clienteData.put("direccionCliente", direccionClientePet);
+            clienteData.put("telefonoCliente", telefonoClientePet);
+            clienteData.put("uid", uid); // Mantener el UID del veterinario
+
+            // Agregar el cliente a la colección "cliente" en Firestore
+            mfirestore.collection("cliente")
+                    .add(clienteData)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference clienteRef) {
+                            // Obtener el ID del cliente recién creado (el nombre del documento)
+                            String clienteId = clienteRef.getId();
+                            Log.d("postCliente", "Cliente creado con ID: " + clienteId);
+
+                            // Actualizar el UID del cliente con el ID generado por Firestore
+                            Map<String, Object> uidData = new HashMap<>();
+                            uidData.put("clienteId", clienteId);
+
+                            clienteRef.update(uidData)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("postCliente", "UID del cliente actualizado correctamente");
+                                            // Mostrar un mensaje de éxito
+                                            Toast.makeText(getContext(), "Cliente creado exitosamente", Toast.LENGTH_SHORT).show();
+
+                                            // Cerrar el diálogo después de que el cliente se haya creado correctamente
+                                            getDialog().dismiss();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Mostrar un mensaje de error si falla la actualización del UID
+                                            Toast.makeText(getContext(), "Error al actualizar UID del cliente", Toast.LENGTH_SHORT).show();
+                                            Log.e("ERROR", "Error al actualizar UID del cliente: " + e.getMessage());
+                                        }
+                                    });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Mostrar un mensaje de error si falla la creación del cliente
+                            Toast.makeText(getContext(), "Error al crear el cliente", Toast.LENGTH_SHORT).show();
+                            Log.e("ERROR", "Error al crear el cliente: " + e.getMessage());
+                        }
+                    });
+        }
     }
+
+        private void getcliente() {
+            mfirestore.collection("cliente").document(id_cliente).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    String nombreClienteText = documentSnapshot.getString("nombreCliente");
+                    String direccionClienteText = documentSnapshot.getString("direccionCliente");
+                    String telefonoClienteText = documentSnapshot.getString("telefonoCliente");
+
+                    nombreCliente.setText(nombreClienteText);
+                    direccionCliente.setText(direccionClienteText);
+                    telefonoCliente.setText(telefonoClienteText);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 
