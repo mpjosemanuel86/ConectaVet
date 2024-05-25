@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="clientes_array">
+        <item>Cliente 1</item>
+        <item>Cliente 2</item>
+        <item>Cliente 3</item>
+        <!-- Agrega más clientes según sea necesario -->
+    </string-array>
+</resources>

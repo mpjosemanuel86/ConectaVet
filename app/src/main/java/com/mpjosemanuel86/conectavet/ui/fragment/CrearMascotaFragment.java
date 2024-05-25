@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -18,10 +20,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mpjosemanuel86.conectavet.R;
 import com.mpjosemanuel86.conectavet.model.Cliente;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CrearMascotaFragment extends DialogFragment {
@@ -30,7 +36,10 @@ public class CrearMascotaFragment extends DialogFragment {
     Button btnGuardarDatos;
     EditText nombreMascota, especieMascota, razaMascota, tamanioMascota, sexoMascota, fechaNacimientoMascota, colorMascota;
     private FirebaseFirestore mfirestore;
+    private static final String TAG = "CrearMascotaFragment";
     private FirebaseAuth mAuth;
+    private Spinner spinnerDocumentos;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,30 @@ public class CrearMascotaFragment extends DialogFragment {
         colorMascota = v.findViewById(R.id.editTextColorMascota);
 
         btnGuardarDatos = v.findViewById(R.id.buttonGuardarDatos);
+        spinnerDocumentos = v.findViewById(R.id.clientesSpinner);
+
+
+        List<String> nombresClientes = new ArrayList<>();
+
+
+        Spinner spinnerDocumentos = v.findViewById(R.id.clientesSpinner);
+        mfirestore.collection("cliente").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                List<String> documentos = new ArrayList<>();
+                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                    String nombreCliente = document.getString("nombreCliente");
+                    nombresClientes.add(nombreCliente);
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, nombresClientes);
+                spinnerDocumentos.setAdapter(adapter);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "Error al obtener documentos", e);
+            }
+        });
 
         if (id_mascota == null || id_mascota.equals("")) {
             btnGuardarDatos.setOnClickListener(new View.OnClickListener() {
@@ -144,33 +177,63 @@ public class CrearMascotaFragment extends DialogFragment {
         if (currentUser != null) {
             String uid = currentUser.getUid(); // Obtener el UID del veterinario actual
 
-            // Agregar la mascota a la colección "pet" con el UID del veterinario
-            DocumentReference petsRef = mfirestore.collection("pet").document();
-            Map<String, Object> mascotaData = new HashMap<>();
-            mascotaData.put("nombreMascota", nombreMascotaPet);
-            mascotaData.put("especieMascota", especieMascotaPet);
-            mascotaData.put("razaMascota", razaMascotaPet);
-            mascotaData.put("tamanioMascota", tamanioMascotaPet);
-            mascotaData.put("sexoMascota", sexoMascotaPet);
-            mascotaData.put("fechaNacimientoMascota", fechaNacimientoMascotaPet);
-            mascotaData.put("colorMascota", colorMascotaPet);
-            mascotaData.put("uid", uid); // Incluir el UID del veterinario
+            // Obtener el nombre del cliente seleccionado en el Spinner
+            String nombreClienteSeleccionado = spinnerDocumentos.getSelectedItem().toString();
 
-            mfirestore.collection("pet")
-                    .add(mascotaData)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            // Buscar el documento del cliente correspondiente en Firestore
+            mfirestore.collection("cliente")
+                    .whereEqualTo("nombreCliente", nombreClienteSeleccionado)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
-                        public void onSuccess(DocumentReference clienteRef) {
-                            Log.d("postMascota", "Mascota creada con ID: " + clienteRef.getId());
-                            Toast.makeText(getContext(), "Mascota creada exitosamente", Toast.LENGTH_SHORT).show();
-                            getDialog().dismiss();
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            // Suponiendo que solo hay un cliente con el mismo nombre
+                            if (!queryDocumentSnapshots.isEmpty()) {
+                                DocumentSnapshot clienteDocumentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
+
+                                // Obtener la referencia al documento del cliente
+                                String clienteId = clienteDocumentSnapshot.getId();
+
+                                // Crear un mapa con los datos de la mascota
+                                Map<String, Object> mascotaData = new HashMap<>();
+                                mascotaData.put("nombreMascota", nombreMascotaPet);
+                                mascotaData.put("especieMascota", especieMascotaPet);
+                                mascotaData.put("razaMascota", razaMascotaPet);
+                                mascotaData.put("tamanioMascota", tamanioMascotaPet);
+                                mascotaData.put("sexoMascota", sexoMascotaPet);
+                                mascotaData.put("fechaNacimientoMascota", fechaNacimientoMascotaPet);
+                                mascotaData.put("colorMascota", colorMascotaPet);
+                                mascotaData.put("uid", uid); // Incluir el UID del veterinario
+                                mascotaData.put("clienteRef", clienteId); // Incluir la referencia al documento del cliente
+
+                                // Guardar la información de la mascota en un nuevo documento en la colección "pet"
+                                mfirestore.collection("pet")
+                                        .add(mascotaData)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference mascotaRef) {
+                                                Log.d(TAG, "Mascota creada con ID: " + mascotaRef.getId());
+                                                Toast.makeText(getContext(), "Mascota creada exitosamente", Toast.LENGTH_SHORT).show();
+                                                getDialog().dismiss();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getContext(), "Error al ingresar datos", Toast.LENGTH_SHORT).show();
+                                                Log.e(TAG, "Error al ingresar datos de la mascota: " + e.getMessage());
+                                            }
+                                        });
+                            } else {
+                                Log.e(TAG, "No se encontró ningún cliente con el nombre seleccionado: " + nombreClienteSeleccionado);
+                            }
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), "Error al ingresar datos", Toast.LENGTH_SHORT).show();
-                            Log.e("ERROR", "Error al ingresar datos: " + e.getMessage());
+                            Toast.makeText(getContext(), "Error al obtener datos del cliente", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "Error al obtener datos del cliente: " + e.getMessage());
                         }
                     });
         } else {
