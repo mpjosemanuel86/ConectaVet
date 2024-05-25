@@ -55,24 +55,6 @@ public class GestionMascotaActivity extends AppCompatActivity {
         // Configurar RecyclerView
         mRecycler = findViewById(R.id.rvMascotas);
 
-        // Crear datos de ejemplo
-        /*
-        mascotas = new ArrayList<>();
-        mascotas.add(new Mascota("Mascota 1"));
-        mascotas.add(new Mascota("Mascota 2"));
-        mascotas.add(new Mascota("Mascota 3"));
-         */
-
-
-        // Crear un MascotaAdapter
-        //mAdapter = new MascotaAdapter(mascotas);
-
-        // Establecer el MascotaAdapter en el RecyclerView
-        //mRecycler.setAdapter(mAdapter);
-
-        // Establecer un LayoutManager en el RecyclerView
-        //mRecycler.setLayoutManager(new LinearLayoutManager(this));
-
 
         DocumentReference docRef = mFirestore.collection("users").document(currentUser.getUid());
         CollectionReference subColRef = docRef.collection("clientes");
@@ -92,11 +74,12 @@ public class GestionMascotaActivity extends AppCompatActivity {
                         subColRefPets.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                array_cliente.add(obj_cliente);
+                                //array_cliente.add(obj_cliente);
                                 for(DocumentSnapshot documentSnapshot1: queryDocumentSnapshots){
                                     Mascota obj_mascota = documentSnapshot1.toObject(Mascota.class);
                                     if(obj_mascota != null && obj_mascota.getNombreMascota() != null){
                                         Log.d("mascota", obj_mascota.getNombreMascota());
+                                        obj_mascota.setCliente(obj_cliente);
                                         array_mascota.add(obj_mascota);
                                     }
                                 }
@@ -104,7 +87,6 @@ public class GestionMascotaActivity extends AppCompatActivity {
                                 myAdapter = new MyAdapter(array_mascota, getApplicationContext());
                                 mRecycler.setAdapter(myAdapter);
                                 mRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                                //mRecycler.setAdapter(mAdapter);
                             }
                             }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -125,19 +107,7 @@ public class GestionMascotaActivity extends AppCompatActivity {
 
 
         if (currentUser != null) {
-            /*
-            String uid = currentUser.getUid();
-            Query query = mFirestore.collection("pet").whereEqualTo("uid", uid);
 
-            FirestoreRecyclerOptions<Mascota> firestoreRecyclerOptions =
-                    new FirestoreRecyclerOptions.Builder<Mascota>().setQuery(query, Mascota.class).build();
-
-            mAdapter = new MascotaAdapter(firestoreRecyclerOptions, this, getSupportFragmentManager());
-            mAdapter.notifyDataSetChanged();
-            mRecycler.setAdapter(mAdapter);
-            */
-
-            //Log.d("UID", uid);
         } else {
             Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }

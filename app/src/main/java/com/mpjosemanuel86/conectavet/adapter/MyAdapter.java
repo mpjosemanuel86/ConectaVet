@@ -26,13 +26,15 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nombreMascota, especieMascota, razaMascota, tvCliente;
+        TextView nombreMascota, especieMascota, razaMascota, sexoMascota, nom_cliente;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nombreMascota = itemView.findViewById(R.id.tvNombreMascota);
             especieMascota = itemView.findViewById(R.id.tvEspecie);
             razaMascota = itemView.findViewById(R.id.tvRaza);
+            sexoMascota = itemView.findViewById(R.id.tvGenero);
+            nom_cliente = itemView.findViewById(R.id.tvCliente);
         }
     }
     ArrayList<Mascota> mascotas;
@@ -65,6 +67,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.nombreMascota.setText(mascotas.get(position).getNombreMascota());
         holder.especieMascota.setText(mascotas.get(position).getEspecieMascota());
         holder.razaMascota.setText(mascotas.get(position).getRazaMascota());
+        holder.sexoMascota.setText(mascotas.get(position).getSexoMascota());
+        holder.nom_cliente.setText(mascotas.get(position).getCliente().getNombreCliente());
     }
 
     @Override

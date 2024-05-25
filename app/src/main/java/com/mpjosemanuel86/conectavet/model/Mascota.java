@@ -6,6 +6,7 @@ public class Mascota {
     private String nombreMascota;
     private String razaMascota;
     private String generoMascota;
+    private String sexoMascota;
     private String fechaNacimientoMascota;
     private String colorMascota;
 
@@ -19,11 +20,11 @@ public class Mascota {
         this.nombreMascota = nombreMascota;
     }
 
-    public Mascota(String especieMascota, String nombreMascota, String razaMascota, String generoMascota, String fechaNacimientoMascota, String colorMascota, Cliente cliente) {
+    public Mascota(String especieMascota, String nombreMascota, String razaMascota, String sexoMascota, String fechaNacimientoMascota, String colorMascota, Cliente cliente) {
         this.especieMascota = especieMascota;
         this.nombreMascota = nombreMascota;
         this.razaMascota = razaMascota;
-        this.generoMascota = generoMascota;
+        this.sexoMascota = sexoMascota;
         this.fechaNacimientoMascota = fechaNacimientoMascota;
         this.colorMascota = colorMascota;
         this.cliente = cliente;
@@ -91,5 +92,13 @@ public class Mascota {
 
     public Cliente getCliente(){
         return this.cliente;
+    }
+
+    public String getSexoMascota() {
+        return sexoMascota;
+    }
+
+    public void setSexoMascota(String sexoMascota) {
+        this.sexoMascota = sexoMascota;
     }
 }
