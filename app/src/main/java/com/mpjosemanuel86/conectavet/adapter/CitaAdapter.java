@@ -22,6 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpjosemanuel86.conectavet.R;
 import com.mpjosemanuel86.conectavet.model.Cita;
+import com.mpjosemanuel86.conectavet.ui.activities.AgendaCitaActivity;
 import com.mpjosemanuel86.conectavet.ui.fragment.CrearClienteFragment;
 
 public class CitaAdapter extends FirestoreRecyclerAdapter<Cita, CitaAdapter.ViewHolder> {
@@ -44,12 +45,6 @@ public class CitaAdapter extends FirestoreRecyclerAdapter<Cita, CitaAdapter.View
         viewHolder.horaCita.setText(cita.getHoraCita());
         viewHolder.nombreCliente.setText(cita.getNombreCliente());
 
-        viewHolder.btn_editar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Aquí deberías definir la lógica para editar una cita si es necesario
-            }
-        });
         viewHolder.btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +58,9 @@ public class CitaAdapter extends FirestoreRecyclerAdapter<Cita, CitaAdapter.View
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(activity, "Cita eliminada correctamente", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(activity, AgendaCitaActivity.class);
+                activity.startActivity(intent);
+                activity.finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -81,7 +79,7 @@ public class CitaAdapter extends FirestoreRecyclerAdapter<Cita, CitaAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView fechaCita, horaCita, nombreCliente;
-        ImageButton btn_eliminar, btn_editar;
+        ImageButton btn_eliminar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,7 +88,7 @@ public class CitaAdapter extends FirestoreRecyclerAdapter<Cita, CitaAdapter.View
             horaCita = itemView.findViewById(R.id.tvHoraCita);
             nombreCliente = itemView.findViewById(R.id.tvNombreCliente);
             btn_eliminar = itemView.findViewById(R.id.btn_eliminar);
-            btn_editar = itemView.findViewById(R.id.btn_editar);
+
         }
     }
 }
