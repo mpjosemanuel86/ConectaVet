@@ -160,7 +160,18 @@ public class GestionCitaActivity extends AppCompatActivity {
                 });
     }
 
-
+    private void mostrarSelectorFecha() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                textViewFechaSeleccionada.setText(dateFormatter.format(calendar.getTime()));
+            }
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
     private void cargarHorariosEnSpinner() {
         List<String> horarios = new ArrayList<>();
         for (int hour = 9; hour < 17; hour++) {
@@ -174,27 +185,13 @@ public class GestionCitaActivity extends AppCompatActivity {
         spinnerHorarios.setAdapter(adapter);
     }
 
-
-
-    private void mostrarSelectorFecha() {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                textViewFechaSeleccionada.setText(dateFormatter.format(calendar.getTime()));
-            }
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.show();
-    }
-
     private void guardarCita() {
-        String nombreCliente = editTextNombreCliente.getText().toString().trim();
+        String nombreCliente = spinnerClientes.getSelectedItem().toString();
+        String nombreMascota = spinnerMascotas.getSelectedItem().toString();
         String fechaCita = textViewFechaSeleccionada.getText().toString().trim();
         String horaCita = spinnerHorarios.getSelectedItem().toString().trim();
 
-        if (nombreCliente.isEmpty() || fechaCita.isEmpty() || horaCita.isEmpty()) {
+        if (nombreCliente.isEmpty() ||nombreMascota.isEmpty()|| fechaCita.isEmpty() || horaCita.isEmpty()) {
             Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
         } else {
             // Verificar disponibilidad del intervalo horario
@@ -225,6 +222,7 @@ public class GestionCitaActivity extends AppCompatActivity {
                                     // El horario está disponible, guardar la cita
                                     Map<String, Object> cita = new HashMap<>();
                                     cita.put("nombreCliente", nombreCliente);
+                                    cita.put("nombreMascota", nombreMascota);
                                     cita.put("fechaCita", fechaCita);
                                     cita.put("horaCita", horaCita);
 
