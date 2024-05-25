@@ -39,7 +39,9 @@ import java.util.Map;
 public class GestionCitaActivity extends AppCompatActivity {
 
     EditText editTextNombreCliente;
+    EditText editTextMotivoCita;
     Button buttonSeleccionarFecha, buttonGuardarCita;
+
     TextView textViewFechaSeleccionada;
     Spinner spinnerMascotas, spinnerHorarios, spinnerClientes;
 
@@ -62,6 +64,8 @@ public class GestionCitaActivity extends AppCompatActivity {
         spinnerMascotas = findViewById(R.id.spinnerMascotas);
         spinnerHorarios = findViewById(R.id.spinnerHorarios);
         spinnerClientes = findViewById(R.id.spinnerClientes);
+        editTextMotivoCita = findViewById(R.id.editTextMotivoCita);
+
 
         calendar = Calendar.getInstance();
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -190,6 +194,7 @@ public class GestionCitaActivity extends AppCompatActivity {
         String nombreMascota = spinnerMascotas.getSelectedItem().toString();
         String fechaCita = textViewFechaSeleccionada.getText().toString().trim();
         String horaCita = spinnerHorarios.getSelectedItem().toString().trim();
+        String motivoCita = editTextMotivoCita.getText().toString().trim();
 
         if (nombreCliente.isEmpty() ||nombreMascota.isEmpty()|| fechaCita.isEmpty() || horaCita.isEmpty()) {
             Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
@@ -220,11 +225,15 @@ public class GestionCitaActivity extends AppCompatActivity {
 
                                 if (horarioDisponible) {
                                     // El horario está disponible, guardar la cita
+                                    String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid(); // Obtener el UID del usuario actual
                                     Map<String, Object> cita = new HashMap<>();
                                     cita.put("nombreCliente", nombreCliente);
                                     cita.put("nombreMascota", nombreMascota);
                                     cita.put("fechaCita", fechaCita);
                                     cita.put("horaCita", horaCita);
+                                    cita.put("tipoCita", motivoCita);
+                                    cita.put("uid", currentUserID); // Agregar el UID del usuario actual
+
 
                                     db.collection("citas")
                                             .add(cita)
@@ -233,7 +242,7 @@ public class GestionCitaActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<DocumentReference> task) {
                                                     if (task.isSuccessful()) {
                                                         Toast.makeText(GestionCitaActivity.this, "Cita guardada correctamente", Toast.LENGTH_SHORT).show();
-                                                        editTextNombreCliente.setText("");
+                                                        editTextMotivoCita.setText("");
                                                         textViewFechaSeleccionada.setText("");
                                                         spinnerHorarios.setSelection(0);
                                                     } else {

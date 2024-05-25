@@ -10,7 +10,7 @@
     <style name="BotonApp" parent="Widget.AppCompat.Button">
         <item name="android:textColor">@android:color/white</item> <!-- Letras blancas -->
         <item name="android:padding">12dp</item> <!-- Ajusta el padding según tus preferencias -->
-        <item name="android:radius">8dp</item> <!-- Radio de la esquina -->
+        <item name="android:radius">130dp</item> <!-- Radio de la esquina -->
     </style>
 
 </resources>

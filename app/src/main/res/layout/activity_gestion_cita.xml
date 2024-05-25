@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+
     <!-- Título de la actividad -->
     <TextView
         android:layout_width="wrap_content"
@@ -16,6 +17,12 @@
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:tint="@color/colorSecondaryConectaVet"
+        android:src="@drawable/ic_calendar"/>
     <TextView
         android:id="@+id/textViewSeleccionarCliente"
         android:layout_width="match_parent"
@@ -51,6 +58,9 @@
         android:id="@+id/buttonSeleccionarFecha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorSecondaryConectaVet"
+        android:radius="40dp"
+        style="@style/BotonApp"
         android:text="Seleccionar Fecha"
         android:layout_marginBottom="16dp"/>
 
@@ -70,12 +80,21 @@
         android:layout_marginBottom="16dp"
         android:prompt="@string/selecciona_horario"/>
 
+    <EditText
+        android:id="@+id/editTextMotivoCita"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Motivo de la cita" />
+
     <!-- Botón para guardar la cita -->
     <Button
         android:id="@+id/buttonGuardarCita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:radius="100dp"
+        android:padding="12dp"
         android:text="Guardar Cita"
         android:layout_marginTop="16dp"/>
 
 </LinearLayout>
+

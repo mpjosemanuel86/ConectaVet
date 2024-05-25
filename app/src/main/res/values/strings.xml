@@ -16,10 +16,10 @@
 
     <!--MENÚ PRINCIPAL-->
     <string name="GestionCliente">Clientes</string>
-    <string name="ProgramarCitas">Citas</string>
-    <string name="RecordatorioVacunas">Vacunas</string>
+    <string name="ProgramarCitas">Agendar citas</string>
+    <string name="RecordatorioVacunas">Ver citas</string>
     <string name="HistorialMascota">Mascotas</string>
-    <string name="GestionRecurso">Recursos</string>
+    <string name="GestionRecurso">Sobre mi</string>
     <string name="CerrarSesion">Salir</string>
 
     <!--ACTIVIDAD GESTIÓN CLIENTE-->

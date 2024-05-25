@@ -23,7 +23,7 @@ import com.mpjosemanuel86.conectavet.R;
 
 public class MenuPrincipal extends AppCompatActivity {
 
-    Button CerrarSesion, botonClientes, botonMascotas, botonCitas;
+    Button CerrarSesion, botonClientes, botonMascotas, botonCitas, botonVerCitas;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
 
@@ -45,6 +45,8 @@ public class MenuPrincipal extends AppCompatActivity {
         botonClientes = findViewById(R.id.btnClientes);
         botonMascotas = findViewById(R.id.btnMascotas);
         botonCitas = findViewById(R.id.btnCitas);
+        botonVerCitas = findViewById(R.id.btnVerCitas);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
@@ -71,6 +73,14 @@ public class MenuPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuPrincipal.this, GestionCitaActivity.class);
+                intent.putExtra("USER_ID", user.getUid());
+                startActivity(intent);
+            }
+        });
+        botonVerCitas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuPrincipal.this, AgendaCitaActivity.class);
                 intent.putExtra("USER_ID", user.getUid());
                 startActivity(intent);
             }
