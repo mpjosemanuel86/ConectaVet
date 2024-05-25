@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,9 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mpjosemanuel86.conectavet.R;
@@ -51,7 +55,7 @@ public class GestionCitaActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        editTextNombreCliente = findViewById(R.id.editTextNombreCliente);
+
         buttonSeleccionarFecha = findViewById(R.id.buttonSeleccionarFecha);
         buttonGuardarCita = findViewById(R.id.buttonGuardarCita);
         textViewFechaSeleccionada = findViewById(R.id.textViewFechaSeleccionada);
@@ -61,6 +65,7 @@ public class GestionCitaActivity extends AppCompatActivity {
 
         calendar = Calendar.getInstance();
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
 
         buttonSeleccionarFecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,34 +82,84 @@ public class GestionCitaActivity extends AppCompatActivity {
         });
 
         consultarClientes(); // Llamada al método para cargar los clientes
-        consultarMascotas();
         cargarHorariosEnSpinner();
     }
 
 
     private void consultarClientes() {
-        CollectionReference clientesRef = db.collection("cliente");
-        clientesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    List<String> nombresClientes = new ArrayList<>();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        String nombreCliente = document.getString("nombreCliente");
-                        nombresClientes.add(nombreCliente);
-                    }
+        if (currentUser != null) {
+            String usuarioId = currentUser.getUid();
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(GestionCitaActivity.this,
-                            android.R.layout.simple_spinner_item, nombresClientes);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerClientes.setAdapter(adapter);
-                } else {
-                    Log.d("TAG", "Error al obtener los clientes: ", task.getException());
-                }
-            }
-        });
+            CollectionReference clientesRef = db.collection("cliente");
+            clientesRef.whereEqualTo("uid", usuarioId) // Filtrar por el UID del usuario autenticado
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                List<String> nombresClientes = new ArrayList<>();
+                                final List<String> clientesIds = new ArrayList<>();
+
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String nombreCliente = document.getString("nombreCliente");
+                                    nombresClientes.add(nombreCliente);
+                                    clientesIds.add(document.getId());
+                                }
+
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(GestionCitaActivity.this,
+                                        android.R.layout.simple_spinner_item, nombresClientes);
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spinnerClientes.setAdapter(adapter);
+
+                                spinnerClientes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        String clienteId = clientesIds.get(position);
+                                        consultarMascotas(clienteId);
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+                                        // Manejar la falta de selección si es necesario
+                                    }
+                                });
+                            } else {
+                                Log.d("TAG", "Error al obtener los clientes: ", task.getException());
+                            }
+                        }
+                    });
+        }
     }
+
+    private void consultarMascotas(String clienteId) {
+        CollectionReference mascotasRef = db.collection("pet");
+        mascotasRef.whereEqualTo("clienteId", clienteId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<String> nombresMascotas = new ArrayList<>();
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String nombreMascota = document.getString("nombreMascota");
+                                nombresMascotas.add(nombreMascota);
+                            }
+
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(GestionCitaActivity.this,
+                                    android.R.layout.simple_spinner_item, nombresMascotas);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinnerMascotas.setAdapter(adapter);
+                        } else {
+                            Log.d("TAG", "Error al obtener las mascotas: ", task.getException());
+                        }
+                    }
+                });
+    }
+
 
     private void cargarHorariosEnSpinner() {
         List<String> horarios = new ArrayList<>();
@@ -119,29 +174,7 @@ public class GestionCitaActivity extends AppCompatActivity {
         spinnerHorarios.setAdapter(adapter);
     }
 
-    private void consultarMascotas() {
-        CollectionReference mascotasRef = db.collection("pet");
-        mascotasRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    List<String> nombresMascotas = new ArrayList<>();
 
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        String nombreMascota = document.getString("nombreMascota");
-                        nombresMascotas.add(nombreMascota);
-                    }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(GestionCitaActivity.this,
-                            android.R.layout.simple_spinner_item, nombresMascotas);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerMascotas.setAdapter(adapter);
-                } else {
-                    Log.d("TAG", "Error al obtener las mascotas: ", task.getException());
-                }
-            }
-        });
-    }
 
     private void mostrarSelectorFecha() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -183,7 +216,7 @@ public class GestionCitaActivity extends AppCompatActivity {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     String horaExistente = document.getString("horaCita");
                                     if (horaExistente.equals(horaCita)) {
-                                        horarioDisponible = false;
+                                        horarioDisponible =                                        horarioDisponible = false;
                                         break;
                                     }
                                 }
@@ -222,3 +255,4 @@ public class GestionCitaActivity extends AppCompatActivity {
         }
     }
 }
+

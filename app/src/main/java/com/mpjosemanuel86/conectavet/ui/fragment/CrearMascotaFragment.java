@@ -204,7 +204,7 @@ public class CrearMascotaFragment extends DialogFragment {
                                 mascotaData.put("fechaNacimientoMascota", fechaNacimientoMascotaPet);
                                 mascotaData.put("colorMascota", colorMascotaPet);
                                 mascotaData.put("uid", uid); // Incluir el UID del veterinario
-                                mascotaData.put("clienteRef", clienteId); // Incluir la referencia al documento del cliente
+                                mascotaData.put("clienteId", clienteId); // Incluir la referencia al documento del cliente
 
                                 // Guardar la información de la mascota en un nuevo documento en la colección "pet"
                                 mfirestore.collection("pet")
