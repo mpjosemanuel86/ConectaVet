@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo6"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -10,9 +11,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registro de Citas"
+        android:fontFamily="@font/robotos"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
+    <TextView
+        android:id="@+id/textViewSeleccionarCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/selecciona_cliente"
         android:layout_marginBottom="16dp"/>
 
     <!-- Spinner para seleccionar el cliente -->
@@ -22,6 +30,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:prompt="@string/selecciona_cliente"/>
+
+    <TextView
+        android:id="@+id/textViewSeleccionarMascota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/selecciona_mascota"
+        android:layout_marginBottom="16dp"/>
 
     <!-- Spinner para seleccionar la mascota -->
     <Spinner
