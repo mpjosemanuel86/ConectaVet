@@ -8,21 +8,25 @@ public class Mascota {
     private String generoMascota;
     private String fechaNacimientoMascota;
     private String colorMascota;
-    private String clienteUid;
 
-    private String cliente_id;
+    private String nombreCliente;
+    private Cliente cliente;
 
     public Mascota() {
     }
 
-    public Mascota(String especieMascota, String nombreMascota, String razaMascota, String generoMascota, String fechaNacimientoMascota, String colorMascota, String clienteUid) {
+    public Mascota(String nombreMascota) {
+        this.nombreMascota = nombreMascota;
+    }
+
+    public Mascota(String especieMascota, String nombreMascota, String razaMascota, String generoMascota, String fechaNacimientoMascota, String colorMascota, Cliente cliente) {
         this.especieMascota = especieMascota;
         this.nombreMascota = nombreMascota;
         this.razaMascota = razaMascota;
         this.generoMascota = generoMascota;
         this.fechaNacimientoMascota = fechaNacimientoMascota;
         this.colorMascota = colorMascota;
-        this.clienteUid = clienteUid;
+        this.cliente = cliente;
     }
 
     public String getEspecieMascota() {
@@ -73,11 +77,19 @@ public class Mascota {
         this.colorMascota = colorMascota;
     }
 
-    public String getClienteUid() {
-        return clienteUid;
+    public String getNombreCliente() {
+        return nombreCliente;
     }
 
-    public void setClienteUid(String clienteUid) {
-        this.clienteUid = clienteUid;
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public void setCliente(Cliente cliente){
+        this.cliente = cliente;
+    }
+
+    public Cliente getCliente(){
+        return this.cliente;
     }
 }

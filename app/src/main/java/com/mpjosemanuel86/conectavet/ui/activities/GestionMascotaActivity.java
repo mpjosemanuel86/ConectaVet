@@ -24,6 +24,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mpjosemanuel86.conectavet.R;
 import com.mpjosemanuel86.conectavet.adapter.MascotaAdapter;
+import com.mpjosemanuel86.conectavet.adapter.MyAdapter;
 import com.mpjosemanuel86.conectavet.model.Cliente;
 import com.mpjosemanuel86.conectavet.model.Mascota;
 import com.mpjosemanuel86.conectavet.ui.fragment.CrearMascotaFragment;
@@ -34,11 +35,13 @@ public class GestionMascotaActivity extends AppCompatActivity {
 
     private Button btn_add_fragment;
     private RecyclerView mRecycler;
-    private MascotaAdapter mAdapter;
+    //private MascotaAdapter mAdapter;
+    private MyAdapter myAdapter;
     private FirebaseFirestore mFirestore;
     private FirebaseUser currentUser;
     ArrayList<Mascota> array_mascota;
     ArrayList<Cliente> array_cliente;
+    ArrayList<Mascota> mascotas;
 
 
     @Override
@@ -51,7 +54,24 @@ public class GestionMascotaActivity extends AppCompatActivity {
 
         // Configurar RecyclerView
         mRecycler = findViewById(R.id.rvMascotas);
-        mRecycler.setLayoutManager(new LinearLayoutManager(this));
+
+        // Crear datos de ejemplo
+        /*
+        mascotas = new ArrayList<>();
+        mascotas.add(new Mascota("Mascota 1"));
+        mascotas.add(new Mascota("Mascota 2"));
+        mascotas.add(new Mascota("Mascota 3"));
+         */
+
+
+        // Crear un MascotaAdapter
+        //mAdapter = new MascotaAdapter(mascotas);
+
+        // Establecer el MascotaAdapter en el RecyclerView
+        //mRecycler.setAdapter(mAdapter);
+
+        // Establecer un LayoutManager en el RecyclerView
+        //mRecycler.setLayoutManager(new LinearLayoutManager(this));
 
 
         DocumentReference docRef = mFirestore.collection("users").document(currentUser.getUid());
@@ -80,6 +100,11 @@ public class GestionMascotaActivity extends AppCompatActivity {
                                         array_mascota.add(obj_mascota);
                                     }
                                 }
+
+                                myAdapter = new MyAdapter(array_mascota, getApplicationContext());
+                                mRecycler.setAdapter(myAdapter);
+                                mRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                //mRecycler.setAdapter(mAdapter);
                             }
                             }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -100,6 +125,7 @@ public class GestionMascotaActivity extends AppCompatActivity {
 
 
         if (currentUser != null) {
+            /*
             String uid = currentUser.getUid();
             Query query = mFirestore.collection("pet").whereEqualTo("uid", uid);
 
@@ -109,7 +135,9 @@ public class GestionMascotaActivity extends AppCompatActivity {
             mAdapter = new MascotaAdapter(firestoreRecyclerOptions, this, getSupportFragmentManager());
             mAdapter.notifyDataSetChanged();
             mRecycler.setAdapter(mAdapter);
-            Log.d("UID", uid);
+            */
+
+            //Log.d("UID", uid);
         } else {
             Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
@@ -130,14 +158,15 @@ public class GestionMascotaActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mAdapter.startListening();
+        //mAdapter.startListening();
         }
 
 
     @Override
     protected void onStop() {
         super.onStop();
-            mAdapter.stopListening();
-        }
+        //mAdapter.stopListening();
     }
+}
+
 

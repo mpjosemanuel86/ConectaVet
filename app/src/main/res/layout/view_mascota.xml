@@ -78,7 +78,7 @@
                 android:layout_weight="1"
                 android:text="Género"
                 android:textSize="16sp"/>
-
+<!--
             <TextView
                 android:id="@+id/tvCliente"
                 android:layout_width="match_parent"
@@ -86,9 +86,9 @@
                 android:layout_weight="1"
                 android:text="Cliente"
                 android:textSize="16sp"/>
-
+-->
         </LinearLayout>
-
+<!--
         <ImageButton
             android:id="@+id/btn_editar"
             android:src="@drawable/ic_edit"
@@ -109,6 +109,6 @@
             android:tint="@color/white"
             android:src="@drawable/ic_delete"
             android:padding="5dp" />
-
+-->
     </LinearLayout>
 </androidx.cardview.widget.CardView>

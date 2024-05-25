@@ -1,10 +1,13 @@
 package com.mpjosemanuel86.conectavet.model;
 
+import java.util.List;
+
 public class Cliente {
     private String uid;
     private String nombreCliente;
     private String direccionCliente;
     private String telefonoCliente;
+    private List<Mascota> mascotas; // Añade esta línea
 
     public Cliente() {}
 
@@ -45,6 +48,14 @@ public class Cliente {
 
     public void setTelefonoCliente(String telefonoCliente) {
         this.telefonoCliente = telefonoCliente;
+    }
+
+     public List<Mascota> getMascotas() {
+        return mascotas;
+    }
+
+    public void setMascotas(List<Mascota> mascotas) {
+        this.mascotas = mascotas;
     }
 
     @Override

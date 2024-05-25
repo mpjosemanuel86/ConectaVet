@@ -9,7 +9,6 @@
     tools:context=".ui.activities.GestionClienteActivity">
 
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMascotas"
         android:layout_width="0dp"

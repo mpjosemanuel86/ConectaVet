@@ -105,7 +105,7 @@ public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAda
             razaMascota = itemView.findViewById(R.id.tvRaza);
             btn_eliminar = itemView.findViewById(R.id.btn_eliminar);
             btn_editar = itemView.findViewById(R.id.btn_editar);
-            tvCliente = itemView.findViewById(R.id.tvCliente);
+            //tvCliente = itemView.findViewById(R.id.tvCliente);
         }
     }
 }
