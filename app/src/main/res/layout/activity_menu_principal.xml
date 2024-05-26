@@ -90,6 +90,7 @@
 
                 <Button
                     android:id="@+id/btnClientes"
+                    style="@style/BotonApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/teal_700"
