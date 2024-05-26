@@ -88,7 +88,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            style="@style/BotonApp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_button"
             android:text="Guardar" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

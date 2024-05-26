@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/robotos"
                     android:text="@string/BienvenidoPrincipal"
-                    android:textColor="#fff"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <ProgressBar
@@ -90,10 +90,15 @@
 
                 <Button
                     android:id="@+id/btnClientes"
-                    style="@style/BotonApp"
+                    android:background="@drawable/rounded_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/teal_700"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+
+
+
                     android:text="@string/GestionCliente" />
 
             </LinearLayout>
@@ -115,7 +120,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/teal_700"
-                    android:text="@string/ProgramarCitas" />
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rounded_button"
+                    android:text="angendar citas" />
 
             </LinearLayout>
 
@@ -144,7 +152,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/teal_700"
-                    android:text="@string/RecordatorioVacunas" />
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rounded_button"
+                    android:text="mis citas" />
 
             </LinearLayout>
 
@@ -165,6 +176,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/teal_700"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rounded_button"
                     android:text="@string/HistorialMascota" />
 
             </LinearLayout>
@@ -194,6 +208,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/teal_700"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rounded_button"
                     android:text="@string/GestionRecurso" />
 
             </LinearLayout>
@@ -215,6 +232,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/teal_700"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rounded_button"
                     android:text="@string/CerrarSesion" />
 
             </LinearLayout>

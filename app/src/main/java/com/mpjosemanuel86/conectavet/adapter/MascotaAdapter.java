@@ -1,14 +1,12 @@
 package com.mpjosemanuel86.conectavet.adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +22,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpjosemanuel86.conectavet.R;
 import com.mpjosemanuel86.conectavet.model.Mascota;
-import com.mpjosemanuel86.conectavet.ui.fragment.CrearClienteFragment;
 import com.mpjosemanuel86.conectavet.ui.fragment.CrearMascotaFragment;
 
 public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAdapter.ViewHolder> {
@@ -46,15 +43,20 @@ public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAda
         viewHolder.nombreMascota.setText(mascota.getNombreMascota());
         viewHolder.especieMascota.setText(mascota.getEspecieMascota());
         viewHolder.razaMascota.setText(mascota.getRazaMascota());
-        // Asignar otros campos de Mascota a las vistas
+
+        // Establecer la imagen según la especie de la mascota
+        if (mascota.getEspecieMascota().equalsIgnoreCase("perro")) {
+            viewHolder.photo.setImageResource(R.drawable.perro_generico);
+        } else if (mascota.getEspecieMascota().equalsIgnoreCase("gato")) {
+            viewHolder.photo.setImageResource(R.drawable.gato_generico);
+        } else {
+            // Si la especie no coincide con ninguna de las anteriores, puedes mostrar una imagen genérica predeterminada o dejarla vacía
+            viewHolder.photo.setImageResource(R.drawable.imagen_generica_predeterminada);
+        }
 
         viewHolder.btn_editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(activity, CrearMascotaFragment.class);
-                i.putExtra("id_mascota", id);
-                //  activity.startActivity(i);
-
                 CrearMascotaFragment crearMascotaFragment = new CrearMascotaFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("id_mascota", id);
@@ -66,7 +68,6 @@ public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAda
         viewHolder.btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 borrarMascota(id);
             }
         });
@@ -87,7 +88,6 @@ public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAda
                 });
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -98,6 +98,7 @@ public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAda
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView nombreMascota, especieMascota, razaMascota;
         ImageButton btn_eliminar, btn_editar;
+        ImageView photo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -106,6 +107,7 @@ public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAda
             razaMascota = itemView.findViewById(R.id.tvRaza);
             btn_eliminar = itemView.findViewById(R.id.btn_eliminar);
             btn_editar = itemView.findViewById(R.id.btn_editar);
+            photo = itemView.findViewById(R.id.photo);
         }
     }
 }

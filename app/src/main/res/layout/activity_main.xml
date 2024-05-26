@@ -35,9 +35,11 @@
 
         <Button
             android:id="@+id/Btn_login"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_button"
             android:backgroundTint="@color/teal_700"
             android:fontFamily="@font/robotos"
             android:text="@string/Btn_Login"
@@ -45,9 +47,11 @@
 
         <Button
             android:id="@+id/Btn_Registro"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_button"
             android:backgroundTint="@color/teal_700"
             android:fontFamily="@font/robotos"
             android:text="@string/Btn_Registro"

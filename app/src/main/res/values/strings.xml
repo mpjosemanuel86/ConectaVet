@@ -19,7 +19,7 @@
     <string name="ProgramarCitas">Agendar citas</string>
     <string name="RecordatorioVacunas">Ver citas</string>
     <string name="HistorialMascota">Mascotas</string>
-    <string name="GestionRecurso">Sobre mi</string>
+    <string name="GestionRecurso">Sobre mí</string>
     <string name="CerrarSesion">Salir</string>
 
     <!--ACTIVIDAD GESTIÓN CLIENTE-->

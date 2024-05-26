@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo6"
     tools:context=".ui.activities.RegistroActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -34,15 +35,15 @@
             android:text="@string/CrearCuentaTXT"
             android:textSize="25dp" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="user1.json"
-            app:lottie_imageAssetsFolder="assets"
-            app:lottie_loop="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"/>
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="user3.json"
+                app:lottie_imageAssetsFolder="assets"
+                app:lottie_loop="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -125,6 +126,9 @@
             android:text="@string/RegistrarUsuario"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/robotos"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

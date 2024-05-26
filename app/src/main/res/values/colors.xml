@@ -3,7 +3,8 @@
     <color name="black">#FF000000</color>
 
     <color name="white">#FFFFFFFF</color>
-    <color name="red">#C30042</color>
+    <color name="red">#F24235</color>
+    <color name="blue">#4883D2</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -13,11 +14,14 @@
     <color name="colorOnPrimary">#FFFFFF</color>
 
     <!-- Colores secundarios -->
-    <color name="colorSecondaryConectaVet">#1DD8DD</color>
-    <color name="colorSecondary">#03DAC6</color>
-    <color name="colorSecondaryVariant">#018786</color>
-    <color name="colorPrimary">#00897b</color>
-    <color name="colorPrimaryDark">#005b4f</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorSecondaryConectaVet">#C2EEED</color>
+    <color name="colorSecondary">#1DD8DD</color>
+    <color name="colorSecondaryVariant">#63B5B7</color>
+    <color name="colorPrimary">#00897B</color>
+    <color name="colorPrimaryDark">#434343</color>
+    <color name="colorSecondaryVariant2">#C61175</color>
+
+
+
 
 </resources>

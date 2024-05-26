@@ -50,6 +50,10 @@
             android:id="@+id/btnGuardarDatos2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:text="Guardar"
             android:layout_marginTop="16dp"/>
     </LinearLayout>

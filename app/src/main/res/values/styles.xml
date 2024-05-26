@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorSecondaryConectaVet</item>
+        <item name="fontFamily">@font/robotos</item>
     </style>
 
     <!-- Estilo para los botones de la aplicación -->
