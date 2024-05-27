@@ -2,12 +2,12 @@
     <string name="app_name">ConectaVet</string>
 
     <!--MAIN ACTIVITY-->
-    <string name="Btn_Login">Login</string>
-    <string name="Btn_Registro">Register</string>
+    <string name="Btn_Login">Iniciar sesión</string>
+    <string name="Btn_Registro">Registro</string>
 
     <!--ACTIVIDAD REGISTRO-->
-    <string name="CrearCuentaTXT">Create an account</string>
-    <string name="NombreEt">Names</string>
+    <string name="CrearCuentaTXT">Crear una cuenta</string>
+    <string name="NombreEt">Nombre</string>
     <string name="CorreoEt">Correo electrónico</string>
     <string name="ContraseñaEt">Contraseña</string>
     <string name="ConfirmarContraseñaEt">Confirmar contraseña</string>
@@ -42,13 +42,10 @@
     <string name="PassLogin">Contraseña</string>
     <string name="Btn_Login2">Ingresar</string>
     <string name="UsuarioNuevoTXT">¿No tienes una cuenta?. Registrate</string>
-
-    <!--ACTIVIDAD LOGIN-->
     <string name="BienvenidoPrincipal">Bienvenido@</string>
     <string name="NombresPrincipal"> -- </string>
     <string name="CorreoPrincipal"> -- </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 
 </resources>
