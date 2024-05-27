@@ -136,7 +136,6 @@ public class RegistroActivity extends AppCompatActivity {
         datosVeterinario.put("uid", uid);
         datosVeterinario.put("correo", correo);
         datosVeterinario.put("nombres", nombre);
-        datosVeterinario.put("password", password);
         // Agregar campos adicionales como listas vacías
 
 

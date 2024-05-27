@@ -73,23 +73,37 @@ public class CrearMascotaFragment extends DialogFragment {
 
 
         Spinner spinnerDocumentos = v.findViewById(R.id.clientesSpinner);
-        mfirestore.collection("cliente").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                List<String> documentos = new ArrayList<>();
-                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                    String nombreCliente = document.getString("nombreCliente");
-                    nombresClientes.add(nombreCliente);
-                }
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, nombresClientes);
-                spinnerDocumentos.setAdapter(adapter);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "Error al obtener documentos", e);
-            }
-        });
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid(); // Obtener el UID del usuario actual
+
+            // Realizar la consulta condicional en Firestore
+            mfirestore.collection("cliente")
+                    .whereEqualTo("uid", uid) // Filtrar por UID del usuario actual
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            List<String> nombresClientes = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                String nombreCliente = document.getString("nombreCliente");
+                                nombresClientes.add(nombreCliente);
+                            }
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, nombresClientes);
+                            spinnerDocumentos.setAdapter(adapter);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, "Error al obtener documentos", e);
+                        }
+                    });
+        } else {
+            // Manejar el caso en que el usuario no esté autenticado
+            Toast.makeText(getContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
+        }
+
 
         if (id_mascota == null || id_mascota.equals("")) {
             btnGuardarDatos.setOnClickListener(new View.OnClickListener() {
