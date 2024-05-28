@@ -47,8 +47,6 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">
-
-            <!-- También puede haber un intent-filter aquí si MainActivity es otra actividad de inicio -->
         </activity>
     </application>
 

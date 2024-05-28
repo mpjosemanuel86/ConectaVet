@@ -21,6 +21,10 @@ import com.mpjosemanuel86.conectavet.model.Cliente;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class AgendaCitaActivity extends AppCompatActivity {
 
@@ -41,15 +45,14 @@ public class AgendaCitaActivity extends AppCompatActivity {
         if (currentUser != null) {
             String uid = currentUser.getUid();
 
-            // Obtener la fecha actual en formato "yyyy-MM-dd"
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            // Convertir la fecha actual a formato "yyyyMMdd"
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
             String fechaActual = dateFormat.format(new Date());
-
 
             Query citasQuery = mFirestore.collection("citas")
                     .whereEqualTo("uid", uid)
                     .whereGreaterThanOrEqualTo("fechaCita", fechaActual)
-                    .orderBy("fechaCita", Query.Direction.ASCENDING);// Ordenar por fecha ascendente
+                    .orderBy("fechaCita", Query.Direction.ASCENDING);
 
             FirestoreRecyclerOptions<Cita> firestoreRecyclerOptions =
                     new FirestoreRecyclerOptions.Builder<Cita>().setQuery(citasQuery, Cita.class).build();

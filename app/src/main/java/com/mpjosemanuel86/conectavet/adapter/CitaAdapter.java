@@ -2,7 +2,6 @@ package com.mpjosemanuel86.conectavet.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,17 +22,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpjosemanuel86.conectavet.R;
 import com.mpjosemanuel86.conectavet.model.Cita;
 import com.mpjosemanuel86.conectavet.ui.activities.AgendaCitaActivity;
-import com.mpjosemanuel86.conectavet.ui.fragment.CrearClienteFragment;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class CitaAdapter extends FirestoreRecyclerAdapter<Cita, CitaAdapter.ViewHolder> {
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     private Activity activity;
 
-
     public CitaAdapter(@NonNull FirestoreRecyclerOptions<Cita> options, Activity activity, FragmentManager fm) {
         super(options);
         this.activity = activity;
-
     }
 
     @Override
@@ -41,7 +42,7 @@ public class CitaAdapter extends FirestoreRecyclerAdapter<Cita, CitaAdapter.View
         DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(viewHolder.getAdapterPosition());
         final String id = documentSnapshot.getId();
 
-        viewHolder.fechaCita.setText(cita.getFechaCita());
+        viewHolder.fechaCita.setText(viewHolder.formatDate(cita.getFechaCita())); // Convertir fecha
         viewHolder.horaCita.setText(cita.getHoraCita());
         viewHolder.nombreCliente.setText(cita.getNombreCliente());
 
@@ -88,7 +89,18 @@ public class CitaAdapter extends FirestoreRecyclerAdapter<Cita, CitaAdapter.View
             horaCita = itemView.findViewById(R.id.tvHoraCita);
             nombreCliente = itemView.findViewById(R.id.tvNombreCliente);
             btn_eliminar = itemView.findViewById(R.id.btn_eliminar);
+        }
 
+        public String formatDate(String fechaCita) {
+            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+            SimpleDateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            try {
+                Date date = originalFormat.parse(fechaCita);
+                return targetFormat.format(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return fechaCita; // Devolver la fecha original en caso de error
+            }
         }
     }
 }
