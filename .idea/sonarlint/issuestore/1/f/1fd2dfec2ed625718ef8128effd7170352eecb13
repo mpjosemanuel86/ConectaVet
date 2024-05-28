@@ -1,0 +1,40 @@
+
+d
+java:S16048"(Make this anonymous inner class a lambda(±›áÉJ$97974447-73aa-48cc-ac35-a7571e20cbf1
+d
+java:S1604K"(Make this anonymous inner class a lambda(±›áÉJ$36369054-d3e3-4eb3-96b7-80fc9bde166c
+d
+java:S1604n"(Make this anonymous inner class a lambda(äŞÂJ$0bbf865f-7b16-4c74-afd1-2d1f4ede78d3
+i
+java:S1604t"(Make this anonymous inner class a lambda(œÁÈÌşÿÿÿÿJ$fca878cc-2b84-4abd-a983-3dfb59b6d94b
+j
+java:S1604›"(Make this anonymous inner class a lambda(Ïë£ùÿÿÿÿJ$ab3b654e-2b2c-4c63-9a19-0486d20fc42b
+j
+java:S1604¦"(Make this anonymous inner class a lambda(Ÿ ¹ÿÿÿÿÿJ$7147620e-88bd-4b95-a370-2c6746625084
+j
+java:S1604"(Make this anonymous inner class a lambda(°˜ĞÿÿÿÿÿJ$2155c67a-9242-48dd-a9cf-0142130471ea
+j
+java:S1604°"(Make this anonymous inner class a lambda(Ÿ ¹ÿÿÿÿÿJ$21e3adf8-865b-4fde-ac18-508ab4a2ac8a
+j
+java:S1604¼"(Make this anonymous inner class a lambda(Ëº‹ÏùÿÿÿÿJ$2e9470e9-47aa-4638-b7da-7a14e2bd0df5
+j
+java:S1604Ç"(Make this anonymous inner class a lambda(œÁÈÌşÿÿÿÿJ$23ec4a1f-1afc-4809-824c-dd4a1ccb73f9
+}
+java:S49737"<Strings and Boxed types should be compared using "equals()".(ûŞØ”úÿÿÿÿJ$af791d15-0e38-4272-95e4-d1e4c8d1e2a4
+Œ
+java:S1192i"PDefine a constant instead of duplicating this literal "telefonoCliente" 3 times.(—‡ŸïJ$560d26b6-fe50-4bc0-a7e0-321896660658
+’
+java:S1192h"QDefine a constant instead of duplicating this literal "direccionCliente" 3 times.(Øñí—ûÿÿÿÿJ$18acd296-6db1-4ded-a242-b359c765dda7
+„
+java:S1192n"HDefine a constant instead of duplicating this literal "cliente" 3 times.(äŞÂJ$6bf548a7-9d93-4383-8778-bae1643816d4
+
+java:S1192g"NDefine a constant instead of duplicating this literal "nombreCliente" 3 times.(ÏĞë™ùÿÿÿÿJ$992afcdc-0843-4f51-9e23-fa3ee2f9c273
+‚
+java:S1192x"FDefine a constant instead of duplicating this literal "ERROR" 3 times.(±ÊÔóJ$be88fa03-0585-4f6e-bb59-a5c138eafb37
+	java:S116"URename this field "id_cliente" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ì®÷¡J$d25ea498-6a73-4bb9-9af9-3d0c3230083b
+‰
+java:S1659"MDeclare "direccionCliente" and all following declarations on a separate line.(ßÁ˜J$759b588f-af55-4fb4-9500-45ed5f692a87
+
+java:S1450"TRemove the "mAuth" field and declare it as a local variable in the relevant methods.(ªĞ”’J$0523903d-937e-4df8-a25c-62b8829bc8ef
+e
+java:S1068")Remove this unused "mAuth" private field.(ªĞ”’J$7e197933-ca9b-41e4-a4fa-99ce1fe260df

@@ -16,8 +16,8 @@
         android:padding="10dp">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             app:cardCornerRadius="25dp"
             app:cardElevation="0dp">
 
@@ -25,9 +25,9 @@
                 android:id="@+id/photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorSecondaryVariant"
-                app:srcCompat="@drawable/ic_person2"
-                app:tint="@color/white" />
+
+                app:srcCompat="@drawable/ic_calendar"
+                app:tint="@color/colorPrimary" />
         </androidx.cardview.widget.CardView>
 
         <Space

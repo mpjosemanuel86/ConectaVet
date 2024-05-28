@@ -19,7 +19,7 @@
     <string name="ProgramarCitas">Agendar citas</string>
     <string name="RecordatorioVacunas">Ver citas</string>
     <string name="HistorialMascota">Mascotas</string>
-    <string name="GestionRecurso">Sobre mí</string>
+    <string name="GestionRecurso">GitHub</string>
     <string name="CerrarSesion">Salir</string>
 
     <!--ACTIVIDAD GESTIÓN CLIENTE-->
@@ -27,7 +27,6 @@
 
     <!--ACTIVIDAD GESTIÓN MASCOTA-->
     <string name="AgregarMascota">Agregar mascota</string>
-
     <string name="selecciona_cliente">Seleccionar cliente</string>
     <string name="selecciona_mascota">Seleccionar mascota</string>
     <string name="selecciona_horario">Seleccionar horario</string>

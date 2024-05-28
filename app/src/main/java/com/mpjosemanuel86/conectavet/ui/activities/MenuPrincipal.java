@@ -1,6 +1,7 @@
 package com.mpjosemanuel86.conectavet.ui.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +24,7 @@ import com.mpjosemanuel86.conectavet.R;
 
 public class MenuPrincipal extends AppCompatActivity {
 
-    Button CerrarSesion, botonClientes, botonMascotas, botonCitas, botonVerCitas;
+    Button CerrarSesion, botonClientes, botonMascotas, botonCitas, botonVerCitas, botonGithub;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
 
@@ -46,6 +47,7 @@ public class MenuPrincipal extends AppCompatActivity {
         botonMascotas = findViewById(R.id.btnMascotas);
         botonCitas = findViewById(R.id.btnCitas);
         botonVerCitas = findViewById(R.id.btnVerCitas);
+        botonGithub = findViewById(R.id.btnRecurso);
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -85,6 +87,16 @@ public class MenuPrincipal extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        botonGithub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://github.com/mpjosemanuel86/ConectaVet";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
+
         CerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

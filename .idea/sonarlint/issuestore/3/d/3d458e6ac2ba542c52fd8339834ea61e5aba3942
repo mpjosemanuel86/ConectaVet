@@ -1,0 +1,36 @@
+
+d
+java:S1604B"(Make this anonymous inner class a lambda(— ’©J$f1b865d9-b12a-40bc-8df8-fc56949e4d43
+i
+java:S1604I"(Make this anonymous inner class a lambda(šˆÀüÿÿÿÿJ$618afbb0-3de8-4832-80a6-da91ce743cde
+i
+java:S1604p"(Make this anonymous inner class a lambda(ö…šŞùÿÿÿÿJ$58b18f88-5c08-4e08-b393-aa36ac4f7d03
+i
+java:S1604w"(Make this anonymous inner class a lambda(Ÿ ¹ÿÿÿÿÿJ$6bb10c2b-455b-4b5e-8f2d-4526971ad10d
+j
+java:S1604“"(Make this anonymous inner class a lambda(Ïë£ùÿÿÿÿJ$2f6be0ed-ce9f-48f7-b2f8-2ea9b8510fdf
+j
+java:S1604œ"(Make this anonymous inner class a lambda(Ÿ ¹ÿÿÿÿÿJ$fb797a15-f810-4a05-ab0d-aa3fa9381637
+“	java:S116"SRename this field "NombreEt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(îÂöÍÿÿÿÿÿJ$7d0359e0-72fa-44f0-a21e-71c7bb6543db
+“	java:S116"SRename this field "CorreoEt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(îÂöÍÿÿÿÿÿJ$7f034293-45b4-4109-aa91-fc32ef50751e
+˜	java:S116"XRename this field "ContraseÃ±aEt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(îÂöÍÿÿÿÿÿJ$cad066d3-8c37-4662-b73e-b4451a66cb98
+¡	java:S116"aRename this field "ConfirmarContraseÃ±aEt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(îÂöÍÿÿÿÿÿJ$301178c3-8e9b-47df-9843-750bc9b47198
+•	java:S116"[Rename this field "RegistrarUsuario" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰Ì‡+J$f017eaf4-2e7e-45ef-8271-237e47841ba7
+—	java:S116 "\Rename this field "TengounacuentaTXT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ãû£¸J$8701ad1e-7dbf-4869-8c19-bfbc2ddbf4e3
+†
+java:S1659"EDeclare "CorreoEt" and all following declarations on a separate line.(îÂöÍÿÿÿÿÿJ$dbd53a3d-577c-45c6-9950-ac4288b82a49
+„
+java:S1659&"CDeclare "correo" and all following declarations on a separate line.(Ö‡á›ùÿÿÿÿJ$eb36b63d-5ac6-4fd6-94ae-e7d911112f0f
+r
+java:S1874$"6Remove this use of "ProgressDialog"; it is deprecated.(ğİıºJ$387a3e73-1e0c-4c10-b6f2-564d4c244217
+w
+java:S1874>"6Remove this use of "ProgressDialog"; it is deprecated.(ºŒğÙúÿÿÿÿJ$d65e8528-28d7-4812-876e-e0578f8c63f5
+	java:S100S"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÃùÆşÿÿÿÿJ$f5eaa3a5-3543-4274-8626-e047086cf848
+	java:S100j"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆ±æ–úÿÿÿÿJ$1246e37a-801e-48b4-8a00-75a17f47916e
+n
+java:S1874k"2Remove this use of "setMessage"; it is deprecated.(ÙéŞJ$6a56d470-8edc-436a-af3c-43b4ecff12a7
+	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×ÊÄıÿÿÿÿJ$69139686-4994-42e9-8cb5-8625782f44be
+n
+java:S1874‚"2Remove this use of "setMessage"; it is deprecated.(±ƒØHJ$69208abb-7ba5-4dc0-a341-c2a77bf35010
+w
+java:S1874§"5Remove this use of "onBackPressed"; it is deprecated.(ŸÏ½±ûÿÿÿÿJ$7cf5f9c2-dc37-4d1f-8a9d-3ca3e9969539

@@ -1,0 +1,12 @@
+
+>
+java:S1604?"(Make this anonymous inner class a lambda(€ïõ€
+u	java:S116"[Rename this field "btn_add_fragment" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßÖê´ùÿÿÿÿ
+z
+java:S1450"_Remove the "btn_add_fragment" field and declare it as a local variable in the relevant methods.(ßÖê´ùÿÿÿÿ
+u
+java:S1450"ZRemove the "currentUser" field and declare it as a local variable in the relevant methods.(”Ùµ«øÿÿÿÿ
+t
+java:S1450"YRemove the "mFirestore" field and declare it as a local variable in the relevant methods.(Ž‘Üÿÿÿÿÿÿ
+s
+java:S1450"XRemove the "mRecycler" field and declare it as a local variable in the relevant methods.(œ¼Êšøÿÿÿÿ

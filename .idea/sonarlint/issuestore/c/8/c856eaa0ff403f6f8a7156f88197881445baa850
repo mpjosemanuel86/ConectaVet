@@ -1,0 +1,18 @@
+
+C
+java:S16046"(Make this anonymous inner class a lambda(Ä¡ÏÏùÿÿÿÿ
+C
+java:S1604D"(Make this anonymous inner class a lambda(—‚ïîÿÿÿÿÿ
+>
+java:S1604N"(Make this anonymous inner class a lambda(²¹•ˆ
+C
+java:S1604S"(Make this anonymous inner class a lambda(œÁÈÌşÿÿÿÿ
+U
+java:S1874/":Remove this use of "getAdapterPosition"; it is deprecated.(©Û‰õøÿÿÿÿ
+V	java:S125;"<This block of commented-out lines of code should be removed.(÷¶ä¯üÿÿÿÿ
+q	java:S116e"WRename this field "btn_eliminar" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ã¹œ‰úÿÿÿÿ
+o	java:S116e"URename this field "btn_editar" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ã¹œ‰úÿÿÿÿ
+e
+java:S1659d"JDeclare "nombreCliente" and all following declarations on a separate line.(Ã›ñ¿üÿÿÿÿ
+C
+java:S1659e"(Declare "btn_editar" on a separate line.(ã¹œ‰úÿÿÿÿ

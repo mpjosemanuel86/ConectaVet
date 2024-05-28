@@ -1,0 +1,29 @@
+
+C
+java:S16048"(Make this anonymous inner class a lambda(ó­ŞÈüÿÿÿÿ
+C
+java:S1604@"(Make this anonymous inner class a lambda(úÿö¬ùÿÿÿÿ
+C
+java:S1604H"(Make this anonymous inner class a lambda(”‰Ş›ûÿÿÿÿ
+C
+java:S1604P"(Make this anonymous inner class a lambda(ÁŸ¦ƒùÿÿÿÿ
+=
+java:S1604X"(Make this anonymous inner class a lambda(ˆ¬¨g
+C
+java:S1604s"(Make this anonymous inner class a lambda(ûàõãşÿÿÿÿ
+D
+java:S1604Š"(Make this anonymous inner class a lambda(œÁÈÌşÿÿÿÿ
+^
+java:S1192<"HDefine a constant instead of duplicating this literal "USER_ID" 4 times.(ƒ‘ä
+j
+java:S1192…"NDefine a constant instead of duplicating this literal "MenuPrincipal" 3 times.(ëÑÏÕÿÿÿÿÿ
+q	java:S116"WRename this field "CerrarSesion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÏÙûôüÿÿÿÿ
+p	java:S116"[Rename this field "NombresPrincipal" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ”ÁÓ
+o	java:S116"ZRename this field "CorreoPrincipal" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ”ÁÓ
+e
+java:S1659"JDeclare "botonClientes" and all following declarations on a separate line.(ÏÙûôüÿÿÿÿ
+C
+java:S1659"-Declare "CorreoPrincipal" on a separate line.(Ğ”ÁÓ
+c	java:S100f"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÙÉØŞ
+c	java:S100q"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾û¶ì
+d	java:S100•"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷ÎÖ˜

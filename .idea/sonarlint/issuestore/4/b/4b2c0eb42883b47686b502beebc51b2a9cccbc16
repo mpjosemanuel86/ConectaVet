@@ -1,0 +1,56 @@
+
+c
+java:S1604T"(Make this anonymous inner class a lambda(ë¡êHJ$05cfb7ab-b8ef-473a-a073-0f307e14328b
+i
+java:S1604`"(Make this anonymous inner class a lambda(Ÿ ¹ÿÿÿÿÿJ$6b96d296-a745-467c-a281-fe3987ef96c2
+d
+java:S1604m"(Make this anonymous inner class a lambda(±›áÉJ$b5d3c406-4362-4cd1-b868-4df2fdf4eaa8
+e
+java:S1604ƒ"(Make this anonymous inner class a lambda(±›áÉJ$810865c0-c1ae-491d-978c-3639402b8a24
+e
+java:S1604«"(Make this anonymous inner class a lambda(ÎÏ ÔJ$1434e780-9834-43bc-b509-5604b0cfcb53
+j
+java:S1604±"(Make this anonymous inner class a lambda(œÁÈÌşÿÿÿÿJ$c1cb991a-26bf-4ce0-8181-79cac38dc8dd
+j
+java:S1604â"(Make this anonymous inner class a lambda(°˜ĞÿÿÿÿÿJ$b1806d5f-770b-4f2f-b2bc-7afc9a232c72
+j
+java:S1604ê"(Make this anonymous inner class a lambda(Ÿ ¹ÿÿÿÿÿJ$524af632-7212-4aba-8d12-c687f8e1c274
+d
+java:S1604É"(Make this anonymous inner class a lambda(ë¡êHJ$f0660336-5834-4d81-b93c-a24c0a111071
+j
+java:S1604ö"(Make this anonymous inner class a lambda(Ÿ ¹ÿÿÿÿÿJ$d0e9210e-a8c9-4d2d-85d6-caca379aef8d
+j
+java:S1604ƒ"(Make this anonymous inner class a lambda(¹Ø“¦şÿÿÿÿJ$ba1c1357-86bc-4612-bfcf-77df91501d86
+j
+java:S1604–"(Make this anonymous inner class a lambda(œÁÈÌşÿÿÿÿJ$e5a9907b-8e34-457d-9be3-055c2fb0cf70
+
+java:S1192¡"NDefine a constant instead of duplicating this literal "nombreMascota" 3 times.(¥º§ÖÿÿÿÿÿJ$f31aaee8-5b11-4b69-9f12-e960d681abff
+
+java:S1192§"MDefine a constant instead of duplicating this literal "colorMascota" 3 times.(ÖğµúÿÿÿÿJ$97f0fb15-e9e8-4108-b61d-7ee7f1b3acd3
+™
+java:S1192¦"WDefine a constant instead of duplicating this literal "fechaNacimientoMascota" 3 times.(„´µ‡ÿÿÿÿÿJ$8bae8637-819a-4867-8a5c-3ce454ade5bc
+˜
+java:S1192h"WDefine a constant instead of duplicating this literal "Usuario no autenticado" 3 times.(îşœ†ùÿÿÿÿJ$981f7c77-df73-4470-8227-f664e10458d7
+
+java:S1192¥"LDefine a constant instead of duplicating this literal "sexoMascota" 3 times.(Ú·é‹ùÿÿÿÿJ$d256bc25-36c6-46c8-9d98-873120335322
+‰
+java:S1192£"LDefine a constant instead of duplicating this literal "razaMascota" 3 times.(éÂİ«J$70a0ca9c-6805-41c3-ba87-c7e501151de7
+‘
+java:S1192¢"ODefine a constant instead of duplicating this literal "especieMascota" 3 times.(„ÂÚĞüÿÿÿÿJ$4dc987b5-6349-488c-ae95-d27804857a53
+Œ
+java:S1192¤"ODefine a constant instead of duplicating this literal "tamanioMascota" 3 times.(Œ±ñÉJ$3d11a34a-1da4-484a-afa8-3a37e91e5930
+	java:S116#"URename this field "id_mascota" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜ÖÌßJ$b25bc33b-0ca3-4305-9db5-50f6dc6c7b51
+‡
+java:S1659%"KDeclare "especieMascota" and all following declarations on a separate line.(üåèJ$ba63f6a2-348e-4457-b28c-da2e7c4fb883
+
+java:S1450("TRemove the "mAuth" field and declare it as a local variable in the relevant methods.(ªĞ”’J$12433dea-3cf2-48b5-8a69-48dc277f9884
+“
+java:S37765"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(ËÄ•åûÿÿÿÿJ$b9d36862-875d-4665-8930-daba29157ef4
+„
+java:S1854H"CRemove this useless assignment to local variable "nombresClientes".(èÊŞıÿÿÿÿJ$c7ecfc95-080b-4ef9-8733-bf7821a785ff
+u
+java:S1481H"4Remove this unused "nombresClientes" local variable.(èÊŞıÿÿÿÿJ$5c9bc69b-b1cc-462a-8677-a273f08d3f84
+
+java:S1117K"ERename "spinnerDocumentos" which hides the field declared at line 41.(Ö¤Ï©J$4ff9729f-e0a4-49e8-802f-5c315c0d459c
+e
+java:S1068(")Remove this unused "mAuth" private field.(ªĞ”’J$30935a5b-4caf-42fd-a424-7b2105bc74dd
