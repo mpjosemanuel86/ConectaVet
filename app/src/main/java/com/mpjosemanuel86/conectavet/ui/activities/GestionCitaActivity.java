@@ -1,5 +1,7 @@
 package com.mpjosemanuel86.conectavet.ui.activities;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -16,15 +18,25 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mpjosemanuel86.conectavet.R;
+import com.mpjosemanuel86.conectavet.adapter.MyAdapter;
+import com.mpjosemanuel86.conectavet.model.Cita;
+import com.mpjosemanuel86.conectavet.model.Cliente;
+import com.mpjosemanuel86.conectavet.model.Mascota;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,24 +48,30 @@ import java.util.Map;
 
 public class GestionCitaActivity extends AppCompatActivity {
 
-    EditText editTextNombreCliente;
     Button buttonSeleccionarFecha, buttonSeleccionarHora, buttonGuardarCita;
     TextView textViewFechaSeleccionada, textViewHoraSeleccionada;
-    Spinner spinnerMascotas;
+    Spinner spinnerMascotas, clientesSpinner;
 
     Calendar calendar;
     SimpleDateFormat dateFormatter, timeFormatter;
 
-    FirebaseFirestore db;
+    FirebaseFirestore mFirestore;
+    FirebaseUser currentUser;
+    String userFirebaseUID;
+    DocumentReference docRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_cita);
 
-        db = FirebaseFirestore.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        userFirebaseUID = getIntent().getStringExtra("USER_ID");
+        docRef = mFirestore.collection("users").document(userFirebaseUID);
 
-        editTextNombreCliente = findViewById(R.id.editTextNombreCliente);
+
+        clientesSpinner = findViewById(R.id.spinnerClientes);
         buttonSeleccionarFecha = findViewById(R.id.buttonSeleccionarFecha);
         buttonSeleccionarHora = findViewById(R.id.buttonSeleccionarHora);
         buttonGuardarCita = findViewById(R.id.buttonGuardarCita);
@@ -85,11 +103,12 @@ public class GestionCitaActivity extends AppCompatActivity {
                 guardarCita();
             }
         });
+        getClientesUsuarioSelect();
         consultarMascotas();
     }
 
     private void consultarMascotas() {
-        CollectionReference mascotasRef = db.collection("pet");
+        CollectionReference mascotasRef = mFirestore.collection("pet");
         mascotasRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -140,7 +159,7 @@ public class GestionCitaActivity extends AppCompatActivity {
     }
 
     private void guardarCita() {
-        String nombreCliente = editTextNombreCliente.getText().toString().trim();
+        String nombreCliente = clientesSpinner.getSelectedItem().toString();
         String fechaCita = textViewFechaSeleccionada.getText().toString().trim();
         String horaCita = textViewHoraSeleccionada.getText().toString().trim();
 
@@ -152,56 +171,84 @@ public class GestionCitaActivity extends AppCompatActivity {
             String intervaloFin = "17:00";   // Hora de fin del intervalo
             String horaCitaInicio = horaCita.substring(0, 5); // Extraer solo la hora de la cita
 
+            Log.d("horaCitaInicio", fechaCita);
+            Log.d("intervaloInicio", intervaloInicio);
+            Log.d("intervaloFin", intervaloFin);
             if (horaCitaInicio.compareTo(intervaloInicio) < 0 || horaCitaInicio.compareTo(intervaloFin) > 0) {
-                // La cita no está dentro del intervalo horario permitido
                 Toast.makeText(this, "La cita debe estar dentro del intervalo horario de 09:00 a 17:00", Toast.LENGTH_SHORT).show();
                 return;
             }
+            CollectionReference refCli = docRef.collection("clientes");
 
-            // Consultar citas existentes para la fecha y el intervalo horario
-            CollectionReference citasRef = db.collection("citas");
-            citasRef.whereEqualTo("fechaCita", fechaCita)
-                    .whereGreaterThanOrEqualTo("horaCita", intervaloInicio)
-                    .whereLessThanOrEqualTo("horaCita", intervaloFin)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                if (task.getResult().isEmpty()) {
-                                    // El intervalo horario está disponible, guardar la cita
-                                    Map<String, Object> cita = new HashMap<>();
-                                    cita.put("nombreCliente", nombreCliente);
-                                    cita.put("fechaCita", fechaCita);
-                                    cita.put("horaCita", horaCita);
+            refCli.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        Cliente obj_cliente = documentSnapshot.toObject(Cliente.class);
+                        String cliente_id = documentSnapshot.getString("nombreCliente");
+                        if (nombreCliente.equals(cliente_id)) {
+                            if (obj_cliente != null && obj_cliente.getNombreCliente() != null) {
+                                Log.d("cliente", obj_cliente.getNombreCliente());
+                                Log.d("documentSnapshot", documentSnapshot.getId());
+                                DocumentReference docRefClient = refCli.document(documentSnapshot.getId());
 
-                                    db.collection("citas")
-                                            .add(cita)
-                                            .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<DocumentReference> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Toast.makeText(GestionCitaActivity.this, "Cita guardada correctamente", Toast.LENGTH_SHORT).show();
-                                                        // Limpiar los campos después de guardar la cita
-                                                        editTextNombreCliente.setText("");
-                                                        textViewFechaSeleccionada.setText("");
-                                                        textViewHoraSeleccionada.setText("");
-                                                    } else {
-                                                        Toast.makeText(GestionCitaActivity.this, "Error al guardar la cita", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-                                            });
-                                } else {
-                                    // El intervalo horario está completo, mostrar mensaje
-                                    Toast.makeText(GestionCitaActivity.this, "El intervalo horario de " + intervaloInicio + " a " + intervaloFin + " ya está completo para esta fecha", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                // Error al consultar citas existentes
-                                Log.e("TAG", "Error al consultar citas existentes", task.getException());
-                                Toast.makeText(GestionCitaActivity.this, "Error al consultar citas existentes", Toast.LENGTH_SHORT).show();
+                                CollectionReference subColRefCita = docRefClient.collection("citas");
+                                Cita nuevaCita = new Cita();
+                                nuevaCita.setCliente(obj_cliente);
+                                nuevaCita.setMascota(null);
+                                nuevaCita.setFechaCita(fechaCita); // Establecer la fecha de la cita
+                                nuevaCita.setHoraCita(horaCita);
+                                nuevaCita.setTipoCita("Rápida");
+                                // Añadir la nueva cita a la colección de citas
+                                subColRefCita.add(nuevaCita)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.d("SUCCESS", "Cita añadida con ID: " + documentReference.getId());
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("ERROR", "Error al añadir cita: " + e.getMessage());
+                                    }
+                                });
                             }
+
                         }
-                    });
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("ERROR", "Error al obtener datos: " + e.getMessage());
+                }
+            });
         }
+    }
+
+    public void getClientesUsuarioSelect(){
+        DocumentReference docRef = mFirestore.collection("users").document(currentUser.getUid());
+        CollectionReference subColRef = docRef.collection("clientes");
+        subColRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<String> clientes = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        String nombreCliente = document.getString("nombreCliente");
+                        clientes.add(nombreCliente);
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(GestionCitaActivity.this,
+                            android.R.layout.simple_spinner_item, clientes);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    clientesSpinner.setAdapter(adapter);
+                } else {
+                    Log.w(TAG, "Error getting documents.", task.getException());
+                }
+            }
+        });
     }
 }

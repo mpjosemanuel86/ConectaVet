@@ -61,36 +61,6 @@ public class GestionClienteActivity extends AppCompatActivity {
         mAdapter = new ClienteAdapter(firestoreRecyclerOptions, this, getSupportFragmentManager());
         mAdapter.notifyDataSetChanged();
         mRecycler.setAdapter(mAdapter);
-        /*
-        subColRef.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-/*
-        if (currentUser != null) {
-            String uid = currentUser.getUid();
-            Query query = mFirestore.collection("cliente").whereEqualTo("uid", uid);
-            FirestoreRecyclerOptions<Cliente> firestoreRecyclerOptions =
-                    new FirestoreRecyclerOptions.Builder<Cliente>().setQuery(query, Cliente.class).build();
-
-            mAdapter = new ClienteAdapter(firestoreRecyclerOptions, this, getSupportFragmentManager());
-            mAdapter.notifyDataSetChanged();
-            mRecycler.setAdapter(mAdapter);
-        } else {
-            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
-        }
-*/
-
 
         btn_add_fragment = findViewById(R.id.btnAgregarCliente2);
 

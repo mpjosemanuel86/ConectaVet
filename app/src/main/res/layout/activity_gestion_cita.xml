@@ -16,12 +16,11 @@
         android:layout_marginBottom="16dp"/>
 
     <!-- Campo para ingresar el nombre del cliente -->
-    <EditText
-        android:id="@+id/editTextNombreCliente"
+    <Spinner
+        android:id="@+id/spinnerClientes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre del Cliente"
-        android:layout_marginBottom="16dp"/>
+        android:prompt="@+id/selecciona_mascota" />
 
     <Spinner
         android:id="@+id/spinnerMascotas"
