@@ -27,7 +27,7 @@
             android:fontFamily="@font/robotos"
             android:textStyle="bold"
             android:layout_marginTop="15dp"
-            android:text="Tu nueva app de gestión veterinaria"
+            android:text="@string/bienvenida"
             android:textSize="20sp" />
 
         <TextView

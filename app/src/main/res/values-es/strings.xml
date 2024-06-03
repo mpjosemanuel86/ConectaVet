@@ -1,16 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">ConectaVet</string>
-    <string name="Btn_Login">Iniciar sesión</string>
-    <string name="Btn_Registro">Registrarse</string>
+    <string name="bienvenida">Tu nueva app de gestión veterinaria</string>
+
+    <!--MAIN ACTIVITY-->
+    <string name="Btn_Login">Iniciar Sesión</string>
+    <string name="Btn_Registro">Registro</string>
+
     <string name="CrearCuentaTXT">Crear una cuenta</string>
-    <string name="NombreEt">Nombres</string>
+    <string name="NombreEt">Nombre</string>
     <string name="CorreoEt">Correo electrónico</string>
     <string name="ContraseñaEt">Contraseña</string>
     <string name="ConfirmarContraseñaEt">Confirmar contraseña</string>
     <string name="RegistrarUsuario">Registro</string>
     <string name="TengounacuentaTXT">Tengo una cuenta</string>
+
+    <!--MENÚ PRINCIPAL-->
     <string name="GestionCliente">Clientes</string>
-    <string name="ProgramarCitas">Citas</string>
-    <string name="RecordatorioVacunas">Vacunas</string>
+    <string name="ProgramarCitas">Agendar citas</string>
+    <string name="RecordatorioVacunas">Ver citas</string>
+    <string name="HistorialMascota">Mascotas</string>
+    <string name="GestionRecurso">GitHub</string>
+    <string name="AgendarCitas">Agendar Citas</string>
+    <string name="CerrarSesion">Salir</string>
+    <string name="MisCitas">Mis Citas</string>
+
+    <!--ACTIVIDAD GESTIÓN CLIENTE-->
+    <string name="agregar_cliente">Agregar cliente</string>
+    <string name="Datoscliente">Datos del cliente</string>
+    <string name="NombreCliente">Nombre del cliente</string>
+    <string name="DireccionCliente">Dirección del cliente</string>
+    <string name="TelefonoCliente">Teléfono del cliente</string>
+    <string name="Guardar">Guardar</string>
+    <string name="ConfirmarEliminacion">Confirmar eliminación</string>
+
+
+    <!--ACTIVIDAD GESTIÓN MASCOTA-->
+    <string name="AgregarMascota">Agregar mascota</string>
+    <string name="selecciona_cliente">Seleccionar cliente</string>
+    <string name="selecciona_mascota">Seleccionar mascota</string>
+    <string name="selecciona_horario">Seleccionar horario</string>
+    <string name="datos_mascota">Datos de la mascota</string>
+    <string name="nombre_mascota">Nombre</string>
+    <string name="especie">Especie</string>
+    <string name="raza">Raza</string>
+    <string name="tamaño">Tamaño</string>
+    <string name="sexo">Sexo</string>
+    <string name="fecha_nacimiento">Fecha de nacimiento</string>
+    <string name="color">Color</string>
+
+
+    <!--ACTIVIDAD GESTIÓN CITAS-->
+    <string name="titulo_citas">Registro de Citas</string>
+    <string name="seleccionar_fecha">Seleccionar fecha</string>
+    <string name="guardar_cita">guardar cita</string>
+    <string name="motivo_cita">Motivo de la cita</string>
+
+
+    <!--ACTIVIDAD LOGIN-->
+    <string name="IniciarSesionTXT">Iniciar sesión</string>
+    <string name="CorreoLogin">Correo</string>
+    <string name="PassLogin">Contraseña</string>
+    <string name="Btn_Login2">Ingresar</string>
+    <string name="UsuarioNuevoTXT">¿No tienes una cuenta?. Registrate</string>
+    <string name="BienvenidoPrincipal">Bienvenido@</string>
+    <string name="NombresPrincipal"> -- </string>
+    <string name="CorreoPrincipal"> -- </string>
 </resources>

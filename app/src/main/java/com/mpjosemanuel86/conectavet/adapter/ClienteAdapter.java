@@ -75,17 +75,32 @@ public class ClienteAdapter extends FirestoreRecyclerAdapter<Cliente, ClienteAda
     }
 
     private void borrarCliente(String id) {
-        mFirestore.collection("cliente").document(id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Confirmar eliminación");
+        builder.setMessage("¿Estás seguro de eliminar este cliente?");
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(activity, "Cliente eliminado correctamente", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(activity, "Error al eliminar cliente", Toast.LENGTH_SHORT).show();
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mFirestore.collection("cliente").document(id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(activity, "Cliente eliminado correctamente", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(activity, "Error al eliminar cliente", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // No hacer nada si se cancela la eliminación
+            }
+        });
+        builder.show();
     }
 
 

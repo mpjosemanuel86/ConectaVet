@@ -123,7 +123,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:background="@drawable/rounded_button"
-                    android:text="angendar citas" />
+                    android:text="@string/AgendarCitas" />
 
             </LinearLayout>
 
@@ -155,7 +155,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:background="@drawable/rounded_button"
-                    android:text="mis citas" />
+                    android:text="@string/MisCitas" />
 
             </LinearLayout>
 

@@ -1,6 +1,8 @@
 package com.mpjosemanuel86.conectavet.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +51,16 @@ public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAda
             viewHolder.photo.setImageResource(R.drawable.perro_generico);
         } else if (mascota.getEspecieMascota().equalsIgnoreCase("gato")) {
             viewHolder.photo.setImageResource(R.drawable.gato_generico);
+        } else if (mascota.getEspecieMascota().equalsIgnoreCase("cobaya")) {
+            viewHolder.photo.setImageResource(R.drawable.cobaya_generico);
+        } else if (mascota.getEspecieMascota().equalsIgnoreCase("caballo")) {
+            viewHolder.photo.setImageResource(R.drawable.caballo_generico);
+        } else if (mascota.getEspecieMascota().equalsIgnoreCase("huron")) {
+            viewHolder.photo.setImageResource(R.drawable.huron_generico);
+        } else if (mascota.getEspecieMascota().equalsIgnoreCase("conejo")) {
+            viewHolder.photo.setImageResource(R.drawable.conejo_generico);
+        } else if (mascota.getEspecieMascota().equalsIgnoreCase("hamster")) {
+            viewHolder.photo.setImageResource(R.drawable.hamster);
         } else {
             // Si la especie no coincide con ninguna de las anteriores, puedes mostrar una imagen genérica predeterminada o dejarla vacía
             viewHolder.photo.setImageResource(R.drawable.imagen_generica_predeterminada);
@@ -74,18 +86,32 @@ public class MascotaAdapter extends FirestoreRecyclerAdapter<Mascota, MascotaAda
     }
 
     private void borrarMascota(String id) {
-        mFirestore.collection("pet").document(id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Confirmar eliminación");
+        builder.setMessage("¿Estás seguro de eliminar esta mascota?");
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mFirestore.collection("pet").document(id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(activity, "Mascota eliminada correctamente", Toast.LENGTH_SHORT).show();
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(activity, "Error al eliminar mascota", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // No hacer nada si se cancela la eliminación
+            }
+        });
+        builder.show();
     }
 
     @NonNull

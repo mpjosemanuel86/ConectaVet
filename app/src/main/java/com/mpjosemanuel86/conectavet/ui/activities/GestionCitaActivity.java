@@ -1,6 +1,7 @@
 package com.mpjosemanuel86.conectavet.ui.activities;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -251,6 +252,10 @@ public class GestionCitaActivity extends AppCompatActivity {
                                                     public void onComplete(@NonNull Task<DocumentReference> task) {
                                                         if (task.isSuccessful()) {
                                                             Toast.makeText(GestionCitaActivity.this, "Cita guardada correctamente", Toast.LENGTH_SHORT).show();
+
+                                                            // Abrir el calendario
+                                                            abrirCalendario();
+
                                                             editTextMotivoCita.setText("");
                                                             textViewFechaSeleccionada.setText("");
                                                             spinnerHorarios.setSelection(0);
@@ -274,5 +279,12 @@ public class GestionCitaActivity extends AppCompatActivity {
             }
         }
     }
+    private void abrirCalendario() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_APP_CALENDAR);
+        startActivity(intent);
+    }
+
+
 }
 

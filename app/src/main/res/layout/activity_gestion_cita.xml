@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registro de Citas"
+        android:text="@string/titulo_citas"
         android:fontFamily="@font/robotos"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -68,7 +68,7 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         android:background="@drawable/rounded_button"
-        android:text="Seleccionar Fecha"
+        android:text="@string/seleccionar_fecha"
         android:layout_marginBottom="16dp"/>
 
     <!-- Campo para mostrar la fecha seleccionada -->
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:text="Fecha de la Cita"
+        android:text="@string/seleccionar_fecha"
         android:layout_marginBottom="16dp"/>
 
     <!-- Spinner para seleccionar la hora de la cita -->
@@ -95,7 +95,7 @@
         android:id="@+id/editTextMotivoCita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Motivo de la cita" />
+        android:hint="@string/motivo_cita" />
 
     <!-- Botón para guardar la cita -->
     <Button
@@ -109,7 +109,7 @@
         android:layout_height="wrap_content"
         android:radius="100dp"
         android:padding="12dp"
-        android:text="Guardar Cita"
+        android:text="@string/guardar_cita"
         android:layout_marginTop="16dp"/>
 
 </LinearLayout>

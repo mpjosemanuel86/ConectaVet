@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
            android:textAlignment="center"
-            android:text="Datos del cliente"
+            android:text="@string/Datoscliente"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -31,19 +31,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Nombre del cliente" />
+            android:hint="@string/NombreCliente" />
 
         <EditText
             android:id="@+id/editTextDireccionCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Dirección del cliente" />
+            android:hint="@string/DireccionCliente" />
 
         <EditText
             android:id="@+id/editTextTelefonoCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Teléfono del cliente"
+            android:hint="@string/TelefonoCliente"
             android:inputType="phone" />
 
         <Button
@@ -54,7 +54,7 @@
             android:layout_gravity="center"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="Guardar"
+            android:text="@string/Guardar"
             android:layout_marginTop="16dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

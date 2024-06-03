@@ -33,59 +33,59 @@
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
+        <!-- TextView -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Datos de la mascota"
+            android:text="@string/datos_mascota"
             android:textStyle="bold"
             android:textSize="20sp"
             android:gravity="center_horizontal" />
 
-
-        <!-- Datos de la mascota -->
+        <!-- Pet data -->
         <EditText
             android:id="@+id/editTextNombreMascota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:hint="Nombre" />
+            android:hint="@string/nombre_mascota" />
 
         <EditText
             android:id="@+id/editTextEspecieMascota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Especie" />
+            android:hint="@string/especie" />
 
         <EditText
             android:id="@+id/editTextRazaMascota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Raza" />
+            android:hint="@string/raza" />
 
         <EditText
             android:id="@+id/editTextTamanioMascota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tamaño" />
+            android:hint="@string/tamaño" />
 
         <EditText
             android:id="@+id/editTextSexoMascota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Sexo" />
+            android:hint="@string/sexo" />
 
         <EditText
             android:id="@+id/editTextFechaNacimientoMascota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
-            android:hint="Fecha de nacimiento" />
+            android:hint="@string/fecha_nacimiento" />
 
         <EditText
             android:id="@+id/editTextColorMascota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Color" />
+            android:hint="@string/color" />
+
 
 
 
@@ -98,6 +98,6 @@
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@drawable/rounded_button"
-            android:text="Guardar" />
+            android:text="@string/Guardar" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

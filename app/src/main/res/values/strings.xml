@@ -1,50 +1,71 @@
 <resources>
     <string name="app_name">ConectaVet</string>
+    <string name="bienvenida">Your new veterinary management app</string>
 
     <!--MAIN ACTIVITY-->
-    <string name="Btn_Login">Iniciar sesión</string>
-    <string name="Btn_Registro">Registro</string>
+    <string name="Btn_Login">Login</string>
+    <string name="Btn_Registro">Register</string>
 
-    <!--ACTIVIDAD REGISTRO-->
-    <string name="CrearCuentaTXT">Crear una cuenta</string>
-    <string name="NombreEt">Nombre</string>
-    <string name="CorreoEt">Correo electrónico</string>
-    <string name="ContraseñaEt">Contraseña</string>
-    <string name="ConfirmarContraseñaEt">Confirmar contraseña</string>
-    <string name="RegistrarUsuario">Registro</string>
-    <string name="TengounacuentaTXT">Tengo una cuenta</string>
+    <!--SIGNUP ACTIVITY-->
+    <string name="CrearCuentaTXT">Create an account</string>
+    <string name="NombreEt">Name</string>
+    <string name="CorreoEt">Email</string>
+    <string name="ContraseñaEt">Password</string>
+    <string name="ConfirmarContraseñaEt">Confirm Password</string>
+    <string name="RegistrarUsuario">Register</string>
+    <string name="TengounacuentaTXT">I have an account</string>
 
-    <!--MENÚ PRINCIPAL-->
-    <string name="GestionCliente">Clientes</string>
-    <string name="ProgramarCitas">Agendar citas</string>
-    <string name="RecordatorioVacunas">Ver citas</string>
-    <string name="HistorialMascota">Mascotas</string>
+    <!--MAIN MENU-->
+    <string name="GestionCliente">Clients</string>
+    <string name="ProgramarCitas">Schedule Appointments</string>
+    <string name="RecordatorioVacunas">View Appointments</string>
+    <string name="AgendarCitas">Schedule Appointments</string>
+    <string name="HistorialMascota">Pets</string>
     <string name="GestionRecurso">GitHub</string>
-    <string name="CerrarSesion">Salir</string>
-
-    <!--ACTIVIDAD GESTIÓN CLIENTE-->
-    <string name="AgregarCliente">Agregar cliente</string>
-
-    <!--ACTIVIDAD GESTIÓN MASCOTA-->
-    <string name="AgregarMascota">Agregar mascota</string>
-    <string name="selecciona_cliente">Seleccionar cliente</string>
-    <string name="selecciona_mascota">Seleccionar mascota</string>
-    <string name="selecciona_horario">Seleccionar horario</string>
+    <string name="CerrarSesion">Logout</string>
+    <string name="MisCitas">My Appointments</string>
 
 
-    <!--ACTIVIDAD GESTIÓN CITAS-->
+    <!--CLIENT MANAGEMENT ACTIVITY-->
+    <string name="agregar_cliente">Add client</string>
+    <string name="Datoscliente">Client Details</string>
+    <string name="NombreCliente">Client\'s Name</string>
+    <string name="DireccionCliente">Client\'s Address</string>
+    <string name="TelefonoCliente">Client\'s Phone Number</string>
+    <string name="Guardar">Save</string>
 
 
-    <!--ACTIVIDAD LOGIN-->
-    <string name="IniciarSesionTXT">Iniciar sesión</string>
-    <string name="CorreoLogin">Correo</string>
-    <string name="PassLogin">Contraseña</string>
-    <string name="Btn_Login2">Ingresar</string>
-    <string name="UsuarioNuevoTXT">¿No tienes una cuenta?. Registrate</string>
-    <string name="BienvenidoPrincipal">Bienvenido@</string>
+    <!--PET MANAGEMENT ACTIVITY-->
+    <string name="AgregarMascota">Add Pet</string>
+    <string name="selecciona_cliente">Select Client</string>
+    <string name="selecciona_mascota">Select Pet</string>
+    <string name="selecciona_horario">Select Schedule</string>
+    <string name="datos_mascota">Pet Data</string>
+    <string name="nombre_mascota">Name</string>
+    <string name="especie">Species</string>
+    <string name="raza">Breed</string>
+    <string name="tamaño">Size</string>
+    <string name="sexo">Sex</string>
+    <string name="fecha_nacimiento">Birth Date</string>
+    <string name="color">Color</string>
+
+
+    <!--APPOINTMENT MANAGEMENT ACTIVITY-->
+    <string name="titulo_citas">Appointment Registration</string>
+    <string name="seleccionar_fecha">Select Date</string>
+    <string name="guardar_cita">Save appointment</string>
+    <string name="motivo_cita">Reason for the appointment</string>
+
+
+    <!--LOGIN ACTIVITY-->
+    <string name="IniciarSesionTXT">Login</string>
+    <string name="CorreoLogin">Email</string>
+    <string name="PassLogin">Password</string>
+    <string name="Btn_Login2">Enter</string>
+    <string name="UsuarioNuevoTXT">Don\'t have an account? Sign Up</string>
+    <string name="BienvenidoPrincipal">Welcome</string>
     <string name="NombresPrincipal"> -- </string>
     <string name="CorreoPrincipal"> -- </string>
-
 
 
 </resources>
